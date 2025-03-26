@@ -3,80 +3,176 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LED Matrix Control</title>
+  <title>LED Matrix Control Dashboard</title>
   <style>
+    :root {
+      --primary-color: #ff6f61;
+      --secondary-color: #2d2d2d;
+      --accent-color: #ffffff;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(145deg, #1e1e1e, #2d2d2d);
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
       overflow: hidden;
+      position: relative;
     }
+
+    /* Hiệu ứng nền động */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(255, 111, 97, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
+      animation: pulse 8s infinite;
+      z-index: 0;
+    }
+
     .container {
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
       padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-      text-align: center;
-      animation: fadeIn 1s ease-in-out;
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+      width: 100%;
+      max-width: 500px;
+      position: relative;
+      z-index: 1;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: floatIn 1s ease-out;
     }
+
     h1 {
-      color: #444;
+      color: var(--accent-color);
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, var(--primary-color), #ff9a9e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: textGlow 2s infinite alternate;
+    }
+
+    .input-wrapper {
+      position: relative;
       margin-bottom: 25px;
-      animation: slideIn 0.8s ease-out;
     }
+
     input[type="text"] {
-      padding: 12px;
-      width: 80%;
+      width: 100%;
+      padding: 15px 20px;
       border: none;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s, box-shadow 0.3s;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--accent-color);
+      font-size: 1rem;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
     }
+
+    input[type="text"]::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+      font-style: italic;
+    }
+
     input[type="text"]:focus {
-      transform: scale(1.03);
-      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 111, 97, 0.3);
       outline: none;
     }
+
     button {
-      padding: 12px 25px;
-      background: #ff6f61;
-      color: white;
+      width: 100%;
+      padding: 15px;
+      background: var(--primary-color);
+      color: var(--accent-color);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
-      transition: background 0.3s, transform 0.2s;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
+
+    button::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+
+    button:hover::after {
+      width: 300px;
+      height: 300px;
+    }
+
     button:hover {
-      background: #e65b50;
-      transform: scale(1.1);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(255, 111, 97, 0.4);
     }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+
+    button:active {
+      transform: translateY(1px);
     }
-    @keyframes slideIn {
-      from { transform: translateY(-50px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+
+    /* Animations */
+    @keyframes floatIn {
+      0% { transform: translateY(100px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes textGlow {
+      0% { text-shadow: 0 0 5px rgba(255, 111, 97, 0.5); }
+      100% { text-shadow: 0 0 15px rgba(255, 111, 97, 0.8); }
+    }
+
+    @keyframes vedPulse {
+      0% { opacity: 0.5; }
+      100% { opacity: 0; }
     }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
     <h1>LED Matrix Control</h1>
-    <input type="text" id="message" placeholder="Enter text for LED Matrix">
-    <button onclick="sendMessage()">Send</button>
+    <div class="input-wrapper">
+      <input type="text" id="message" placeholder="Enter text for LED Matrix">
+    </div>
+    <button onclick="sendMessage()">Send to Matrix</button>
   </div>
 
   <script>
     function sendMessage() {
       const message = document.getElementById('message').value;
       if (message) {
-        fetch('https://3990-2402-800-629c-7d19-78e4-e5da-f46c-9b05.ngrok-free.app/update', { // Thay bằng URL ngrok của bạn
+        fetch('https://3990-2402-800-629c-7d19-78e4-e5da-f46c-9b05.ngrok-free.app/update', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
