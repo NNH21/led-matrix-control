@@ -71,10 +71,10 @@
     <input type="text" id="message" placeholder="Enter text for LED Matrix">
     <button onclick="sendMessage()">Send</button>
   </div>
-  
+
   <script>
     // Thay IP này bằng IP của ESP8266 sau khi kết nối WiFi
-    const socket = new WebSocket('ws://192.168.1.x:81'); // Cập nhật IP thực tế
+    const socket = new WebSocket('ws://192.168.1.6:81'); // Cập nhật IP thực tế
 
     socket.onopen = function() {
       console.log('Connected to ESP8266');
