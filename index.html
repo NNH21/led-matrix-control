@@ -404,10 +404,6 @@
         <input type="number" id="blinkInterval" min="100" value="500">
       </div>
     </div>
-    <div class="checkbox-wrapper">
-      <input type="checkbox" id="clock">
-      <label>Hiển thị thời gian</label>
-    </div>
     <button onclick="sendMessage()">Gửi đến Matrix</button>
   </div>
 
@@ -419,7 +415,6 @@
     const blinkCheckbox = document.getElementById('blink');
     const blinkIntervalInput = document.getElementById('blinkInterval');
     const blinkIntervalWrapper = document.getElementById('blinkIntervalWrapper');
-    const clockCheckbox = document.getElementById('clock');
     let selectedEffect = 'scroll-left';
 
     // Xử lý chọn hiệu ứng
@@ -439,32 +434,20 @@
       blinkIntervalWrapper.classList.toggle('show', isBlinkEnabled);
     });
 
-    // Xử lý checkbox hiển thị thời gian
-    clockCheckbox.addEventListener('change', () => {
-      const isClockEnabled = clockCheckbox.checked;
-      messageInput.disabled = isClockEnabled;
-      speedSlider.disabled = isClockEnabled;
-      effectButtons.forEach(btn => btn.classList.toggle('disabled', isClockEnabled));
-      if (isClockEnabled) {
-        messageInput.value = '';
-      }
-    });
-
     async function sendMessage() {
       const message = messageInput.value;
       const speed = speedSlider.value;
       const brightness = brightnessSlider.value;
       const blink = blinkCheckbox.checked ? 'on' : 'off';
       const blinkInterval = blinkCheckbox.checked ? blinkIntervalInput.value : 500;
-      const clock = clockCheckbox.checked ? 'on' : 'off';
 
-      if (!clock && !message) {
-        alert('Vui lòng nhập tin nhắn hoặc bật hiển thị thời gian!');
+      if (!message) {
+        alert('Vui lòng nhập tin nhắn!');
         return;
       }
 
       const url = 'https://78e3-2402-800-629c-7d19-78e4-e5da-f46c-9b05.ngrok-free.app/update'; // CẬP NHẬT URL NGROK MỚI
-      const data = `text=${encodeURIComponent(message)}&speed=${speed}&effect=${selectedEffect}&brightness=${brightness}&blink=${blink}&blinkInterval=${blinkInterval}&clock=${clock}`;
+      const data = `text=${encodeURIComponent(message)}&speed=${speed}&effect=${selectedEffect}&brightness=${brightness}&blink=${blink}&blinkInterval=${blinkInterval}`;
 
       try {
         const response = await fetch(url, {
@@ -478,9 +461,7 @@
         if (response.ok) {
           const result = await response.text();
           console.log('Thành công:', result);
-          if (message) {
-            messageInput.value = '';
-          }
+          messageInput.value = '';
           const button = document.querySelector('button');
           button.style.background = 'linear-gradient(90deg, #00ff99, #00f0ff)';
           setTimeout(() => button.style.background = 'linear-gradient(90deg, var(--primary), var(--secondary))', 500);
