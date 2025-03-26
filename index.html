@@ -46,10 +46,10 @@
     .container {
       background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(15px);
-      padding: 4rem; /* Tăng padding để thoáng hơn */
+      padding: 4rem;
       border-radius: 30px;
       box-shadow: var(--shadow);
-      max-width: 1000px; /* Giảm max-width để giao diện gọn gàng */
+      max-width: 600px; /* Giảm max-width để giao diện gọn gàng */
       width: 90%;
       border: 2px solid rgba(0, 240, 255, 0.2);
       animation: fadeInUp 1.5s ease-out;
@@ -71,9 +71,9 @@
 
     h1 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 5rem; /* Tăng kích thước tiêu đề */
+      font-size: 5rem;
       text-align: center;
-      margin-bottom: 4.5rem; /* Tăng khoảng cách dưới tiêu đề */
+      margin-bottom: 4.5rem;
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -83,17 +83,17 @@
 
     .input-wrapper {
       position: relative;
-      margin-bottom: 3.5rem; /* Tăng khoảng cách */
+      margin-bottom: 3.5rem;
     }
 
     input[type="text"] {
       width: 100%;
-      padding: 1.5rem; /* Tăng padding */
+      padding: 1.5rem;
       border: 2px solid rgba(0, 240, 255, 0.3);
       border-radius: 15px;
       background: rgba(255, 255, 255, 0.05);
       color: var(--accent);
-      font-size: 1.3rem; /* Tăng kích thước chữ */
+      font-size: 1.3rem;
       transition: all 0.4s ease;
     }
 
@@ -116,8 +116,8 @@
 
     .slider-wrapper label {
       color: var(--primary);
-      font-size: 1.5rem; /* Tăng kích thước nhãn */
-      margin-bottom: 1.5rem; /* Tăng khoảng cách dưới nhãn */
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
       display: block;
       text-shadow: 0 0 5px var(--glow);
       text-transform: uppercase;
@@ -127,7 +127,7 @@
     input[type="range"] {
       width: 100%;
       -webkit-appearance: none;
-      height: 10px; /* Tăng chiều cao thanh trượt */
+      height: 10px;
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       border-radius: 5px;
       outline: none;
@@ -136,7 +136,7 @@
 
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 28px; /* Tăng kích thước thumb */
+      width: 28px;
       height: 28px;
       background: var(--accent);
       border-radius: 50%;
@@ -167,16 +167,16 @@
     .effect-buttons {
       display: flex;
       justify-content: center;
-      gap: 3rem; /* Tăng khoảng cách giữa các nút */
+      gap: 3rem;
     }
 
     .effect-button {
-      padding: 1.3rem 3rem; /* Tăng padding */
+      padding: 1.3rem 3rem;
       background: rgba(255, 255, 255, 0.05);
       border: 2px solid rgba(0, 240, 255, 0.3);
       border-radius: 12px;
       color: var(--accent);
-      font-size: 1.3rem; /* Tăng kích thước chữ */
+      font-size: 1.3rem;
       text-align: center;
       cursor: pointer;
       transition: all 0.4s ease;
@@ -239,7 +239,7 @@
 
     input[type="checkbox"] {
       -webkit-appearance: none;
-      width: 28px; /* Tăng kích thước checkbox */
+      width: 28px;
       height: 28px;
       background: rgba(255, 255, 255, 0.05);
       border: 2px solid rgba(0, 240, 255, 0.3);
@@ -265,13 +265,42 @@
       font-size: 1.2rem;
     }
 
+    .blink-interval-wrapper {
+      display: none;
+      margin-left: 2rem;
+    }
+
+    .blink-interval-wrapper.show {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    input[type="number"] {
+      width: 100px;
+      padding: 0.8rem;
+      border: 2px solid rgba(0, 240, 255, 0.3);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--accent);
+      font-size: 1.1rem;
+      transition: all 0.4s ease;
+    }
+
+    input[type="number"]:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 15px var(--glow);
+      background: rgba(255, 255, 255, 0.1);
+      outline: none;
+    }
+
     button {
       width: 100%;
-      padding: 2rem; /* Tăng padding */
+      padding: 2rem;
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       color: #0d0d1a;
       font-weight: 700;
-      font-size: 1.5rem; /* Tăng kích thước chữ */
+      font-size: 1.5rem;
       border: none;
       border-radius: 15px;
       cursor: pointer;
@@ -370,6 +399,10 @@
     <div class="checkbox-wrapper">
       <input type="checkbox" id="blink">
       <label>Nhấp nháy</label>
+      <div class="blink-interval-wrapper" id="blinkIntervalWrapper">
+        <label style="font-size: 1.2rem;">Thời gian trễ (ms):</label>
+        <input type="number" id="blinkInterval" min="100" value="500">
+      </div>
     </div>
     <div class="checkbox-wrapper">
       <input type="checkbox" id="clock">
@@ -384,6 +417,8 @@
     const speedSlider = document.getElementById('speed');
     const brightnessSlider = document.getElementById('brightness');
     const blinkCheckbox = document.getElementById('blink');
+    const blinkIntervalInput = document.getElementById('blinkInterval');
+    const blinkIntervalWrapper = document.getElementById('blinkIntervalWrapper');
     const clockCheckbox = document.getElementById('clock');
     let selectedEffect = 'scroll-left';
 
@@ -397,6 +432,12 @@
     });
 
     document.querySelector('.effect-button[data-effect="scroll-left"]').classList.add('active');
+
+    // Xử lý checkbox nhấp nháy
+    blinkCheckbox.addEventListener('change', () => {
+      const isBlinkEnabled = blinkCheckbox.checked;
+      blinkIntervalWrapper.classList.toggle('show', isBlinkEnabled);
+    });
 
     // Xử lý checkbox hiển thị thời gian
     clockCheckbox.addEventListener('change', () => {
@@ -414,6 +455,7 @@
       const speed = speedSlider.value;
       const brightness = brightnessSlider.value;
       const blink = blinkCheckbox.checked ? 'on' : 'off';
+      const blinkInterval = blinkCheckbox.checked ? blinkIntervalInput.value : 500;
       const clock = clockCheckbox.checked ? 'on' : 'off';
 
       if (!clock && !message) {
@@ -421,8 +463,8 @@
         return;
       }
 
-      const url = 'https://4328-2402-800-629c-7d19-78e4-e5da-f46c-9b05.ngrok-free.app/update'; // CẬP NHẬT URL NGROK MỚI
-      const data = `text=${encodeURIComponent(message)}&speed=${speed}&effect=${selectedEffect}&brightness=${brightness}&blink=${blink}&clock=${clock}`;
+      const url = 'https://1ce1-2402-800-629c-7d19-78e4-e5da-f46c-9b05.ngrok-free.app/update'; // CẬP NHẬT URL NGROK MỚI
+      const data = `text=${encodeURIComponent(message)}&speed=${speed}&effect=${selectedEffect}&brightness=${brightness}&blink=${blink}&blinkInterval=${blinkInterval}&clock=${clock}`;
 
       try {
         const response = await fetch(url, {
