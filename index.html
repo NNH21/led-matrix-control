@@ -46,10 +46,10 @@
     .container {
       background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(15px);
-      padding: 3.5rem; /* Tăng padding để thoáng hơn */
+      padding: 3.5rem;
       border-radius: 25px;
       box-shadow: var(--shadow);
-      max-width: 650px; /* Tăng nhẹ max-width để cân đối */
+      max-width: 700px; /* Tăng nhẹ để cân đối */
       width: 90%;
       border: 2px solid rgba(0, 240, 255, 0.2);
       animation: fadeInUp 1.5s ease-out;
@@ -71,24 +71,24 @@
 
     h1 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 4rem; /* Tăng kích thước tiêu đề */
+      font-size: 4.5rem; /* Tăng kích thước tiêu đề */
       text-align: center;
-      margin-bottom: 3.5rem; /* Tăng khoảng cách dưới tiêu đề */
+      margin-bottom: 4rem;
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 25px var(--glow);
+      text-shadow: 0 0 30px var(--glow);
       animation: neonPulse 2s infinite alternate;
     }
 
     .input-wrapper {
       position: relative;
-      margin-bottom: 3rem; /* Tăng khoảng cách */
+      margin-bottom: 2rem; /* Giảm khoảng cách để tích hợp lịch sử */
     }
 
     input[type="text"] {
       width: 100%;
-      padding: 1.3rem; /* Tăng padding */
+      padding: 1.3rem 3rem 1.3rem 1.3rem; /* Thêm padding phải để chứa icon */
       border: 2px solid rgba(0, 240, 255, 0.3);
       border-radius: 12px;
       background: rgba(255, 255, 255, 0.05);
@@ -110,68 +110,74 @@
       outline: none;
     }
 
-    .history-wrapper {
-      position: relative;
-      margin-bottom: 2rem;
-    }
-
-    .history-toggle {
+    .history-icon {
       position: absolute;
-      right: 10px;
+      right: 15px;
       top: 50%;
       transform: translateY(-50%);
       background: none;
       border: none;
       color: var(--primary);
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       cursor: pointer;
       transition: all 0.3s ease;
     }
 
-    .history-toggle:hover {
+    .history-icon:hover {
       color: var(--secondary);
       text-shadow: 0 0 10px var(--glow);
     }
 
-    .history-list {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      width: 100%;
-      max-height: 200px;
-      overflow-y: auto;
+    .history-chips {
+      display: flex;
+      gap: 0.8rem;
+      margin-top: 1rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      scrollbar-width: thin;
+      scrollbar-color: var(--primary) rgba(255, 255, 255, 0.1);
+    }
+
+    .history-chips::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .history-chips::-webkit-scrollbar-track {
       background: rgba(255, 255, 255, 0.1);
-      border: 2px solid rgba(0, 240, 255, 0.3);
-      border-radius: 12px;
-      z-index: 10;
-      padding: 0.5rem;
+      border-radius: 3px;
     }
 
-    .history-list.show {
-      display: block;
+    .history-chips::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 3px;
     }
 
-    .history-item {
-      padding: 0.8rem;
+    .history-chip {
+      padding: 0.6rem 1.2rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      border-radius: 20px;
       color: var(--accent);
+      font-size: 0.9rem;
       cursor: pointer;
+      white-space: nowrap;
       transition: all 0.3s ease;
     }
 
-    .history-item:hover {
-      background: rgba(0, 240, 255, 0.2);
-      border-radius: 8px;
+    .history-chip:hover {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      color: #0d0d1a;
+      box-shadow: 0 0 15px var(--glow);
     }
 
     .slider-wrapper {
-      margin-bottom: 3rem; /* Tăng khoảng cách */
+      margin-bottom: 3rem;
     }
 
     .slider-wrapper label {
       color: var(--primary);
-      font-size: 1.4rem; /* Tăng kích thước nhãn */
-      margin-bottom: 1.2rem; /* Tăng khoảng cách dưới nhãn */
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
       display: block;
       text-shadow: 0 0 5px var(--glow);
       text-transform: uppercase;
@@ -221,16 +227,16 @@
     .effect-buttons {
       display: flex;
       justify-content: center;
-      gap: 2.5rem; /* Tăng khoảng cách giữa các nút */
+      gap: 2.5rem;
     }
 
     .effect-button {
-      padding: 1.2rem 2.5rem; /* Tăng padding */
+      padding: 1.2rem 2.5rem;
       background: rgba(255, 255, 255, 0.05);
       border: 2px solid rgba(0, 240, 255, 0.3);
       border-radius: 10px;
       color: var(--accent);
-      font-size: 1.2rem; /* Tăng kích thước chữ */
+      font-size: 1.2rem;
       text-align: center;
       cursor: pointer;
       transition: all 0.4s ease;
@@ -269,6 +275,11 @@
       color: #0d0d1a;
       box-shadow: 0 0 25px var(--glow);
       border-color: var(--primary);
+    }
+
+    .effect-button.disabled {
+      opacity: 0.5;
+      pointer-events: none;
     }
 
     .checkbox-wrapper {
@@ -316,11 +327,11 @@
 
     button {
       width: 100%;
-      padding: 1.8rem; /* Tăng padding */
+      padding: 1.8rem;
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       color: #0d0d1a;
       font-weight: 700;
-      font-size: 1.4rem; /* Tăng kích thước chữ */
+      font-size: 1.4rem;
       border: none;
       border-radius: 12px;
       cursor: pointer;
@@ -400,10 +411,8 @@
     <h1>LED Matrix Control</h1>
     <div class="input-wrapper">
       <input type="text" id="message" placeholder="Nhập tin nhắn cho LED Matrix">
-      <div class="history-wrapper">
-        <button class="history-toggle">▼</button>
-        <div class="history-list" id="historyList"></div>
-      </div>
+      <button class="history-icon" title="Lịch sử tin nhắn">🕒</button>
+      <div class="history-chips" id="historyChips"></div>
     </div>
     <div class="slider-wrapper">
       <label>Tốc độ cuộn</label>
@@ -424,13 +433,26 @@
       <input type="checkbox" id="blink">
       <label>Nhấp nháy</label>
     </div>
+    <div class="checkbox-wrapper">
+      <input type="checkbox" id="clock">
+      <label>Hiển thị thời gian</label>
+    </div>
     <button onclick="sendMessage()">Gửi đến Matrix</button>
   </div>
 
   <script>
     const effectButtons = document.querySelectorAll('.effect-button');
+    const messageInput = document.getElementById('message');
+    const speedSlider = document.getElementById('speed');
+    const brightnessSlider = document.getElementById('brightness');
+    const blinkCheckbox = document.getElementById('blink');
+    const clockCheckbox = document.getElementById('clock');
+    const historyChips = document.getElementById('historyChips');
+    const historyIcon = document.querySelector('.history-icon');
     let selectedEffect = 'scroll-left';
+    let history = JSON.parse(localStorage.getItem('messageHistory')) || [];
 
+    // Xử lý chọn hiệu ứng
     effectButtons.forEach(button => {
       button.addEventListener('click', () => {
         effectButtons.forEach(btn => btn.classList.remove('active'));
@@ -441,26 +463,21 @@
 
     document.querySelector('.effect-button[data-effect="scroll-left"]').classList.add('active');
 
-    // Xử lý lịch sử tin nhắn
-    const historyList = document.getElementById('historyList');
-    const historyToggle = document.querySelector('.history-toggle');
-    const messageInput = document.getElementById('message');
-    let history = JSON.parse(localStorage.getItem('messageHistory')) || [];
-
-    // Hiển thị lịch sử tin nhắn đã lưu
+    // Hiển thị lịch sử tin nhắn
     function loadHistory() {
-      historyList.innerHTML = '';
-      history.forEach(msg => {
-        const item = document.createElement('div');
-        item.classList.add('history-item');
-        item.textContent = msg;
-        item.addEventListener('click', () => {
+      historyChips.innerHTML = '';
+      const recentHistory = history.slice(-5); // Lấy tối đa 5 tin nhắn gần nhất
+      recentHistory.forEach(msg => {
+        const chip = document.createElement('div');
+        chip.classList.add('history-chip');
+        chip.textContent = msg.length > 15 ? msg.substring(0, 12) + '...' : msg; // Cắt ngắn nếu quá dài
+        chip.addEventListener('click', () => {
           messageInput.value = msg;
-          historyList.classList.remove('show');
-          historyToggle.textContent = '▼';
+          historyChips.style.display = 'none';
         });
-        historyList.appendChild(item);
+        historyChips.appendChild(chip);
       });
+      historyChips.style.display = history.length > 0 ? 'flex' : 'none';
     }
 
     // Lưu tin nhắn vào lịch sử
@@ -473,27 +490,40 @@
     }
 
     // Hiển thị/ẩn lịch sử tin nhắn
-    historyToggle.addEventListener('click', () => {
-      historyList.classList.toggle('show');
-      historyToggle.textContent = historyList.classList.contains('show') ? '▲' : '▼';
+    historyIcon.addEventListener('click', () => {
+      historyChips.style.display = historyChips.style.display === 'flex' ? 'none' : 'flex';
     });
 
     // Tải lịch sử khi khởi động
     loadHistory();
 
-    async function sendMessage() {
-      const message = document.getElementById('message').value;
-      const speed = document.getElementById('speed').value;
-      const brightness = document.getElementById('brightness').value;
-      const blink = document.getElementById('blink').checked ? 'on' : 'off';
-      const clock = message.trim() === '' ? 'on' : 'off'; // Bật hiển thị thời gian nếu ô nhập trống
+    // Xử lý checkbox hiển thị thời gian
+    clockCheckbox.addEventListener('change', () => {
+      const isClockEnabled = clockCheckbox.checked;
+      messageInput.disabled = isClockEnabled;
+      speedSlider.disabled = isClockEnabled;
+      effectButtons.forEach(btn => btn.classList.toggle('disabled', isClockEnabled));
+      if (isClockEnabled) {
+        messageInput.value = '';
+        historyChips.style.display = 'none';
+      } else {
+        loadHistory();
+      }
+    });
 
-      if (!message && clock === 'off') {
-        alert('Vui lòng nhập tin nhắn hoặc để trống để hiển thị thời gian!');
+    async function sendMessage() {
+      const message = messageInput.value;
+      const speed = speedSlider.value;
+      const brightness = brightnessSlider.value;
+      const blink = blinkCheckbox.checked ? 'on' : 'off';
+      const clock = clockCheckbox.checked ? 'on' : 'off';
+
+      if (!clock && !message) {
+        alert('Vui lòng nhập tin nhắn hoặc bật hiển thị thời gian!');
         return;
       }
 
-      const url = 'https://f801-2402-800-629c-7d19-78e4-e5da-f46c-9b05.ngrok-free.app/update';
+      const url = 'https://b4bb-2402-800-629c-7d19-78e4-e5da-f46c-9b05.ngrok-free.app/update';
       const data = `text=${encodeURIComponent(message)}&speed=${speed}&effect=${selectedEffect}&brightness=${brightness}&blink=${blink}&clock=${clock}`;
 
       try {
@@ -509,8 +539,8 @@
           const result = await response.text();
           console.log('Thành công:', result);
           if (message) {
-            saveMessage(message); // Lưu tin nhắn vào lịch sử
-            document.getElementById('message').value = '';
+            saveMessage(message);
+            messageInput.value = '';
           }
           const button = document.querySelector('button');
           button.style.background = 'linear-gradient(90deg, #00ff99, #00f0ff)';
