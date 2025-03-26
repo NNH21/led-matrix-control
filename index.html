@@ -12,7 +12,7 @@
       --accent: #ffffff;
       --background: #0d0d1a;
       --glow: rgba(0, 240, 255, 0.5);
-      --shadow: 0 0 40px rgba(0, 240, 255, 0.3);
+      --shadow: 0 0 50px rgba(0, 240, 255, 0.4);
     }
 
     * {
@@ -46,10 +46,10 @@
     .container {
       background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(15px);
-      padding: 3.5rem;
-      border-radius: 25px;
+      padding: 4rem; /* Tăng padding để thoáng hơn */
+      border-radius: 30px;
       box-shadow: var(--shadow);
-      max-width: 700px; /* Tăng nhẹ để cân đối */
+      max-width: 1000px; /* Giảm max-width để giao diện gọn gàng */
       width: 90%;
       border: 2px solid rgba(0, 240, 255, 0.2);
       animation: fadeInUp 1.5s ease-out;
@@ -71,29 +71,29 @@
 
     h1 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 4.5rem; /* Tăng kích thước tiêu đề */
+      font-size: 5rem; /* Tăng kích thước tiêu đề */
       text-align: center;
-      margin-bottom: 4rem;
+      margin-bottom: 4.5rem; /* Tăng khoảng cách dưới tiêu đề */
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 30px var(--glow);
+      text-shadow: 0 0 35px var(--glow);
       animation: neonPulse 2s infinite alternate;
     }
 
     .input-wrapper {
       position: relative;
-      margin-bottom: 2rem; /* Giảm khoảng cách để tích hợp lịch sử */
+      margin-bottom: 3.5rem; /* Tăng khoảng cách */
     }
 
     input[type="text"] {
       width: 100%;
-      padding: 1.3rem 3rem 1.3rem 1.3rem; /* Thêm padding phải để chứa icon */
+      padding: 1.5rem; /* Tăng padding */
       border: 2px solid rgba(0, 240, 255, 0.3);
-      border-radius: 12px;
+      border-radius: 15px;
       background: rgba(255, 255, 255, 0.05);
       color: var(--accent);
-      font-size: 1.2rem;
+      font-size: 1.3rem; /* Tăng kích thước chữ */
       transition: all 0.4s ease;
     }
 
@@ -104,80 +104,20 @@
 
     input[type="text"]:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 20px var(--glow);
+      box-shadow: 0 0 25px var(--glow);
       transform: scale(1.02);
       background: rgba(255, 255, 255, 0.1);
       outline: none;
     }
 
-    .history-icon {
-      position: absolute;
-      right: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      color: var(--primary);
-      font-size: 1.2rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .history-icon:hover {
-      color: var(--secondary);
-      text-shadow: 0 0 10px var(--glow);
-    }
-
-    .history-chips {
-      display: flex;
-      gap: 0.8rem;
-      margin-top: 1rem;
-      overflow-x: auto;
-      padding-bottom: 0.5rem;
-      scrollbar-width: thin;
-      scrollbar-color: var(--primary) rgba(255, 255, 255, 0.1);
-    }
-
-    .history-chips::-webkit-scrollbar {
-      height: 6px;
-    }
-
-    .history-chips::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 3px;
-    }
-
-    .history-chips::-webkit-scrollbar-thumb {
-      background: var(--primary);
-      border-radius: 3px;
-    }
-
-    .history-chip {
-      padding: 0.6rem 1.2rem;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(0, 240, 255, 0.3);
-      border-radius: 20px;
-      color: var(--accent);
-      font-size: 0.9rem;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.3s ease;
-    }
-
-    .history-chip:hover {
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      color: #0d0d1a;
-      box-shadow: 0 0 15px var(--glow);
-    }
-
     .slider-wrapper {
-      margin-bottom: 3rem;
+      margin-bottom: 3.5rem;
     }
 
     .slider-wrapper label {
       color: var(--primary);
-      font-size: 1.4rem;
-      margin-bottom: 1.2rem;
+      font-size: 1.5rem; /* Tăng kích thước nhãn */
+      margin-bottom: 1.5rem; /* Tăng khoảng cách dưới nhãn */
       display: block;
       text-shadow: 0 0 5px var(--glow);
       text-transform: uppercase;
@@ -187,37 +127,37 @@
     input[type="range"] {
       width: 100%;
       -webkit-appearance: none;
-      height: 8px;
+      height: 10px; /* Tăng chiều cao thanh trượt */
       background: linear-gradient(90deg, var(--primary), var(--secondary));
-      border-radius: 4px;
+      border-radius: 5px;
       outline: none;
-      box-shadow: 0 0 15px var(--glow);
+      box-shadow: 0 0 20px var(--glow);
     }
 
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 24px;
-      height: 24px;
+      width: 28px; /* Tăng kích thước thumb */
+      height: 28px;
       background: var(--accent);
       border-radius: 50%;
       cursor: pointer;
-      box-shadow: 0 0 20px var(--glow);
+      box-shadow: 0 0 25px var(--glow);
       transition: all 0.3s ease;
     }
 
     input[type="range"]::-webkit-slider-thumb:hover {
       transform: scale(1.3);
-      box-shadow: 0 0 30px var(--glow);
+      box-shadow: 0 0 35px var(--glow);
     }
 
     .effect-wrapper {
-      margin-bottom: 3rem;
+      margin-bottom: 3.5rem;
     }
 
     .effect-wrapper label {
       color: var(--primary);
-      font-size: 1.4rem;
-      margin-bottom: 1.2rem;
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
       display: block;
       text-shadow: 0 0 5px var(--glow);
       text-transform: uppercase;
@@ -227,16 +167,16 @@
     .effect-buttons {
       display: flex;
       justify-content: center;
-      gap: 2.5rem;
+      gap: 3rem; /* Tăng khoảng cách giữa các nút */
     }
 
     .effect-button {
-      padding: 1.2rem 2.5rem;
+      padding: 1.3rem 3rem; /* Tăng padding */
       background: rgba(255, 255, 255, 0.05);
       border: 2px solid rgba(0, 240, 255, 0.3);
-      border-radius: 10px;
+      border-radius: 12px;
       color: var(--accent);
-      font-size: 1.2rem;
+      font-size: 1.3rem; /* Tăng kích thước chữ */
       text-align: center;
       cursor: pointer;
       transition: all 0.4s ease;
@@ -266,14 +206,14 @@
 
     .effect-button:hover {
       transform: translateY(-3px);
-      box-shadow: 0 0 20px var(--glow);
+      box-shadow: 0 0 25px var(--glow);
       border-color: var(--primary);
     }
 
     .effect-button.active {
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       color: #0d0d1a;
-      box-shadow: 0 0 25px var(--glow);
+      box-shadow: 0 0 30px var(--glow);
       border-color: var(--primary);
     }
 
@@ -283,15 +223,15 @@
     }
 
     .checkbox-wrapper {
-      margin-bottom: 3rem;
+      margin-bottom: 3.5rem;
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 1.2rem;
     }
 
     .checkbox-wrapper label {
       color: var(--primary);
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       text-shadow: 0 0 5px var(--glow);
       text-transform: uppercase;
       letter-spacing: 2px;
@@ -299,11 +239,11 @@
 
     input[type="checkbox"] {
       -webkit-appearance: none;
-      width: 24px;
-      height: 24px;
+      width: 28px; /* Tăng kích thước checkbox */
+      height: 28px;
       background: rgba(255, 255, 255, 0.05);
       border: 2px solid rgba(0, 240, 255, 0.3);
-      border-radius: 5px;
+      border-radius: 6px;
       cursor: pointer;
       position: relative;
       transition: all 0.3s ease;
@@ -312,7 +252,7 @@
     input[type="checkbox"]:checked {
       background: var(--primary);
       border-color: var(--primary);
-      box-shadow: 0 0 15px var(--glow);
+      box-shadow: 0 0 20px var(--glow);
     }
 
     input[type="checkbox"]:checked::after {
@@ -322,25 +262,25 @@
       left: 50%;
       transform: translate(-50%, -50%);
       color: #0d0d1a;
-      font-size: 1rem;
+      font-size: 1.2rem;
     }
 
     button {
       width: 100%;
-      padding: 1.8rem;
+      padding: 2rem; /* Tăng padding */
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       color: #0d0d1a;
       font-weight: 700;
-      font-size: 1.4rem;
+      font-size: 1.5rem; /* Tăng kích thước chữ */
       border: none;
-      border-radius: 12px;
+      border-radius: 15px;
       cursor: pointer;
       position: relative;
       overflow: hidden;
       transition: all 0.4s ease;
       text-transform: uppercase;
       letter-spacing: 3px;
-      box-shadow: 0 0 30px var(--glow);
+      box-shadow: 0 0 40px var(--glow);
     }
 
     button::before {
@@ -356,7 +296,7 @@
 
     button:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 40px var(--glow);
+      box-shadow: 0 0 50px var(--glow);
     }
 
     button:active {
@@ -370,7 +310,7 @@
 
     @keyframes neonPulse {
       0% { text-shadow: 0 0 10px var(--glow); }
-      100% { text-shadow: 0 0 30px var(--glow); }
+      100% { text-shadow: 0 0 40px var(--glow); }
     }
 
     @keyframes rotateGlow {
@@ -391,17 +331,17 @@
 
     @media (max-width: 600px) {
       .container {
-        padding: 2.5rem;
+        padding: 3rem;
         max-width: 95%;
       }
 
       h1 {
-        font-size: 3rem;
+        font-size: 3.5rem;
       }
 
       .effect-buttons {
         flex-direction: column;
-        gap: 1.5rem;
+        gap: 2rem;
       }
     }
   </style>
@@ -411,8 +351,6 @@
     <h1>LED Matrix Control</h1>
     <div class="input-wrapper">
       <input type="text" id="message" placeholder="Nhập tin nhắn cho LED Matrix">
-      <button class="history-icon" title="Lịch sử tin nhắn">🕒</button>
-      <div class="history-chips" id="historyChips"></div>
     </div>
     <div class="slider-wrapper">
       <label>Tốc độ cuộn</label>
@@ -447,10 +385,7 @@
     const brightnessSlider = document.getElementById('brightness');
     const blinkCheckbox = document.getElementById('blink');
     const clockCheckbox = document.getElementById('clock');
-    const historyChips = document.getElementById('historyChips');
-    const historyIcon = document.querySelector('.history-icon');
     let selectedEffect = 'scroll-left';
-    let history = JSON.parse(localStorage.getItem('messageHistory')) || [];
 
     // Xử lý chọn hiệu ứng
     effectButtons.forEach(button => {
@@ -463,40 +398,6 @@
 
     document.querySelector('.effect-button[data-effect="scroll-left"]').classList.add('active');
 
-    // Hiển thị lịch sử tin nhắn
-    function loadHistory() {
-      historyChips.innerHTML = '';
-      const recentHistory = history.slice(-5); // Lấy tối đa 5 tin nhắn gần nhất
-      recentHistory.forEach(msg => {
-        const chip = document.createElement('div');
-        chip.classList.add('history-chip');
-        chip.textContent = msg.length > 15 ? msg.substring(0, 12) + '...' : msg; // Cắt ngắn nếu quá dài
-        chip.addEventListener('click', () => {
-          messageInput.value = msg;
-          historyChips.style.display = 'none';
-        });
-        historyChips.appendChild(chip);
-      });
-      historyChips.style.display = history.length > 0 ? 'flex' : 'none';
-    }
-
-    // Lưu tin nhắn vào lịch sử
-    function saveMessage(message) {
-      if (message && !history.includes(message)) {
-        history.push(message);
-        localStorage.setItem('messageHistory', JSON.stringify(history));
-        loadHistory();
-      }
-    }
-
-    // Hiển thị/ẩn lịch sử tin nhắn
-    historyIcon.addEventListener('click', () => {
-      historyChips.style.display = historyChips.style.display === 'flex' ? 'none' : 'flex';
-    });
-
-    // Tải lịch sử khi khởi động
-    loadHistory();
-
     // Xử lý checkbox hiển thị thời gian
     clockCheckbox.addEventListener('change', () => {
       const isClockEnabled = clockCheckbox.checked;
@@ -505,9 +406,6 @@
       effectButtons.forEach(btn => btn.classList.toggle('disabled', isClockEnabled));
       if (isClockEnabled) {
         messageInput.value = '';
-        historyChips.style.display = 'none';
-      } else {
-        loadHistory();
       }
     });
 
@@ -523,7 +421,7 @@
         return;
       }
 
-      const url = 'https://b4bb-2402-800-629c-7d19-78e4-e5da-f46c-9b05.ngrok-free.app/update';
+      const url = 'https://4328-2402-800-629c-7d19-78e4-e5da-f46c-9b05.ngrok-free.app/update'; // CẬP NHẬT URL NGROK MỚI
       const data = `text=${encodeURIComponent(message)}&speed=${speed}&effect=${selectedEffect}&brightness=${brightness}&blink=${blink}&clock=${clock}`;
 
       try {
@@ -539,7 +437,6 @@
           const result = await response.text();
           console.log('Thành công:', result);
           if (message) {
-            saveMessage(message);
             messageInput.value = '';
           }
           const button = document.querySelector('button');
