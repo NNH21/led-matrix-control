@@ -73,28 +73,24 @@
   </div>
 
   <script>
-    // Thay IP này bằng IP của ESP8266 sau khi kết nối WiFi
-    const socket = new WebSocket('ws://192.168.1.6/ws'); // Cập nhật IP thực tế
-
-    socket.onopen = function() {
-      console.log('Connected to ESP8266');
-    };
-
-    socket.onerror = function(error) {
-      console.log('WebSocket Error: ', error);
-    };
-
-    socket.onclose = function() {
-      console.log('Disconnected from ESP8266');
-    };
-
     function sendMessage() {
       const message = document.getElementById('message').value;
-      if (message && socket.readyState === WebSocket.OPEN) {
-        socket.send(message);
-        document.getElementById('message').value = ''; // Xóa ô nhập sau khi gửi
+      if (message) {
+        fetch('http://192.168.1.6/update', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: 'text=' + encodeURIComponent(message)
+        })
+        .then(response => response.text())
+        .then(data => {
+          console.log(data);
+          document.getElementById('message').value = '';
+        })
+        .catch(error => console.error('Error:', error));
       } else {
-        alert('Please connect to ESP8266 or enter some text!');
+        alert('Please enter some text!');
       }
     }
   </script>
