@@ -7,11 +7,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #00ffcc;
-      --secondary: #1a1a2e;
-      --accent: #ffffff;
-      --glow: rgba(0, 255, 204, 0.5);
-      --shadow: 0 0 40px rgba(0, 255, 204, 0.2);
+      --primary-color: #ff3e6c;
+      --secondary-color: #1a1a2e;
+      --accent-color: #ffffff;
+      --glow-color: #ff3e6c;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      --bg-gradient: linear-gradient(135deg, #1a1a2e, #16213e);
     }
 
     * {
@@ -22,241 +23,241 @@
 
     body {
       font-family: 'Roboto', sans-serif;
-      background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
+      background: var(--bg-gradient);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       overflow: hidden;
       position: relative;
+      color: var(--accent-color);
     }
 
+    /* Hiệu ứng nền động */
     body::before {
       content: '';
       position: absolute;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
-      animation: rotateGlow 15s linear infinite;
-      z-index: -1;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(255, 62, 108, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+      animation: pulse 10s infinite;
+      z-index: 0;
     }
 
     .container {
-      background: rgba(255, 255, 255, 0.03);
-      backdrop-filter: blur(20px);
-      padding: 2.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(15px);
+      padding: 40px;
       border-radius: 20px;
       box-shadow: var(--shadow);
-      max-width: 700px;
-      width: 90%;
-      border: 1px solid rgba(0, 255, 204, 0.1);
-      animation: fadeInUp 1s ease-out;
+      width: 100%;
+      max-width: 600px;
       position: relative;
-      overflow: hidden;
-    }
-
-    .container::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, transparent, rgba(0, 255, 204, 0.1), transparent);
-      animation: scan 4s linear infinite;
-      pointer-events: none;
+      z-index: 1;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: floatIn 1s ease-out;
     }
 
     h1 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 2.8rem;
-      text-align: center;
-      margin-bottom: 2rem;
-      background: linear-gradient(90deg, var(--primary), #00ff99);
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      background: linear-gradient(90deg, var(--primary-color), #ff9a9e);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 20px var(--glow);
-      animation: neonPulse 2s infinite alternate;
+      text-shadow: 0 0 10px rgba(255, 62, 108, 0.5);
+      animation: textGlow 2s infinite alternate;
     }
 
     .input-wrapper {
-      position: relative;
-      margin-bottom: 2rem;
+      margin-bottom: 25px;
     }
 
     input[type="text"] {
       width: 100%;
-      padding: 1rem;
-      border: 1px solid rgba(0, 255, 204, 0.2);
+      padding: 15px 20px;
+      border: none;
       border-radius: 10px;
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--accent);
-      font-size: 1.1rem;
-      transition: all 0.4s ease;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--accent-color);
+      font-size: 1rem;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    input[type="text"]::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+      font-style: italic;
     }
 
     input[type="text"]:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 15px var(--glow);
-      transform: scale(1.02);
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 62, 108, 0.3);
+      outline: none;
     }
 
     .slider-wrapper {
-      margin-bottom: 2rem;
+      margin-bottom: 25px;
     }
 
     .slider-wrapper label {
-      color: var(--primary);
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
       display: block;
-      text-shadow: 0 0 5px var(--glow);
+      font-size: 1rem;
+      margin-bottom: 10px;
+      color: var(--accent-color);
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     input[type="range"] {
       width: 100%;
       -webkit-appearance: none;
-      height: 6px;
-      background: linear-gradient(90deg, var(--primary), #00ff99);
-      border-radius: 3px;
+      height: 8px;
+      background: linear-gradient(90deg, var(--primary-color) 0%, #ff9a9e 100%);
+      border-radius: 5px;
       outline: none;
-      box-shadow: 0 0 10px var(--glow);
+      transition: all 0.3s ease;
     }
 
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       width: 20px;
       height: 20px;
-      background: var(--accent);
+      background: var(--accent-color);
       border-radius: 50%;
+      box-shadow: 0 0 10px rgba(255, 62, 108, 0.5);
       cursor: pointer;
-      box-shadow: 0 0 15px var(--glow);
       transition: all 0.3s ease;
     }
 
     input[type="range"]::-webkit-slider-thumb:hover {
-      transform: scale(1.3);
-      box-shadow: 0 0 25px var(--glow);
+      transform: scale(1.2);
+      box-shadow: 0 0 15px rgba(255, 62, 108, 0.8);
     }
 
     .effect-wrapper {
-      margin-bottom: 2rem;
+      margin-bottom: 25px;
     }
 
     .effect-wrapper label {
-      color: var(--primary);
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
       display: block;
-      text-shadow: 0 0 5px var(--glow);
+      font-size: 1rem;
+      margin-bottom: 10px;
+      color: var(--accent-color);
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     .effect-buttons {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-      gap: 0.8rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
     }
 
     .effect-button {
-      padding: 0.8rem;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(0, 255, 204, 0.2);
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 8px;
-      color: var(--accent);
+      color: var(--accent-color);
+      font-size: 0.9rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .effect-button:hover {
+      background: rgba(255, 62, 108, 0.2);
+      border-color: var(--primary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 62, 108, 0.3);
+    }
+
+    .effect-button.active {
+      background: var(--primary-color);
+      border-color: var(--primary-color);
+      box-shadow: 0 0 15px rgba(255, 62, 108, 0.5);
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      background: var(--primary-color);
+      color: var(--accent-color);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      border: none;
+      border-radius: 10px;
       cursor: pointer;
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
     }
 
-    .effect-button::after {
+    button::after {
       content: '';
       position: absolute;
       top: 50%;
       left: 50%;
       width: 0;
       height: 0;
-      background: rgba(0, 255, 204, 0.2);
+      background: rgba(255, 255, 255, 0.2);
       border-radius: 50%;
       transform: translate(-50%, -50%);
-      transition: all 0.6s ease;
+      transition: width 0.6s ease, height 0.6s ease;
     }
 
-    .effect-button:hover::after {
-      width: 200%;
-      height: 200%;
-    }
-
-    .effect-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 0 15px var(--glow);
-      border-color: var(--primary);
-    }
-
-    .effect-button.active {
-      background: var(--primary);
-      color: #1a1a2e;
-      box-shadow: 0 0 20px var(--glow);
-    }
-
-    button {
-      width: 100%;
-      padding: 1rem;
-      background: var(--primary);
-      color: #1a1a2e;
-      font-weight: 700;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s ease;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      box-shadow: 0 0 20px var(--glow);
-    }
-
-    button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      animation: shine 2s infinite;
+    button:hover::after {
+      width: 400px;
+      height: 400px;
     }
 
     button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 30px var(--glow);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(255, 62, 108, 0.5);
     }
 
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(50px); }
-      to { opacity: 1; transform: translateY(0); }
+    button:active {
+      transform: translateY(1px);
     }
 
-    @keyframes neonPulse {
-      0% { text-shadow: 0 0 10px var(--glow); }
-      100% { text-shadow: 0 0 25px var(--glow); }
+    /* Animations */
+    @keyframes floatIn {
+      0% { transform: translateY(100px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
     }
 
-    @keyframes rotateGlow {
-      0% { transform: translate(-50%, -50%) rotate(0deg); }
-      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    @keyframes textGlow {
+      0% { text-shadow: 0 0 5px rgba(255, 62, 108, 0.5); }
+      100% { text-shadow: 0 0 15px rgba(255, 62, 108, 0.8); }
     }
 
-    @keyframes scan {
-      0% { transform: translate(-50%, -50%) rotate(0deg); }
-      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    @keyframes pulse {
+      0% { opacity: 0.5; }
+      100% { opacity: 0; }
     }
 
-    @keyframes shine {
-      0% { left: -100%; }
-      20% { left: 100%; }
-      100% { left: 100%; }
+    /* Responsive */
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+        max-width: 90%;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      .effect-buttons {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
   </style>
 </head>
@@ -264,14 +265,14 @@
   <div class="container">
     <h1>LED Matrix Control</h1>
     <div class="input-wrapper">
-      <input type="text" id="message" placeholder="Nhập tin nhắn của bạn">
+      <input type="text" id="message" placeholder="Nhập tin nhắn cho LED Matrix">
     </div>
     <div class="slider-wrapper">
       <label>Tốc độ cuộn</label>
       <input type="range" id="speed" min="10" max="100" value="50">
     </div>
     <div class="effect-wrapper">
-      <label>Hiệu ứng hiển thị</label>
+      <label>Hiệu ứng</label>
       <div class="effect-buttons">
         <div class="effect-button" data-effect="scroll-left">Cuộn trái</div>
         <div class="effect-button" data-effect="scroll-right">Cuộn phải</div>
@@ -281,12 +282,13 @@
         <div class="effect-button" data-effect="closing">Đóng lại</div>
       </div>
     </div>
-    <button onclick="sendMessage()">Gửi</button>
+    <button onclick="sendMessage()">Gửi đến Matrix</button>
   </div>
 
   <script>
+    // Xử lý chọn hiệu ứng
     const effectButtons = document.querySelectorAll('.effect-button');
-    let selectedEffect = 'scroll-left';
+    let selectedEffect = 'scroll-left'; // Mặc định là scroll-left
 
     effectButtons.forEach(button => {
       button.addEventListener('click', () => {
@@ -296,6 +298,7 @@
       });
     });
 
+    // Đặt hiệu ứng mặc định
     document.querySelector('.effect-button[data-effect="scroll-left"]').classList.add('active');
 
     async function sendMessage() {
@@ -307,12 +310,11 @@
         return;
       }
 
-      // Sử dụng địa chỉ IP của ESP8266
-      const url = 'http://192.168.1.7/update';
+      // Giữ nguyên URL ngrok từ code cũ
+      const url = 'https://f527-2402-800-629c-7d19-78e4-e5da-f46c-9b05.ngrok-free.app/update';
       const data = `text=${encodeURIComponent(message)}&speed=${speed}&effect=${selectedEffect}`;
 
       try {
-        // Kiểm tra kết nối trước khi gửi
         const response = await fetch(url, {
           method: 'POST',
           headers: {
@@ -325,16 +327,17 @@
           const result = await response.text();
           console.log('Thành công:', result);
           document.getElementById('message').value = '';
+          // Thêm hiệu ứng thành công cho nút
           const button = document.querySelector('button');
           button.style.background = '#00ff99';
-          setTimeout(() => button.style.background = 'var(--primary)', 500);
+          setTimeout(() => button.style.background = 'var(--primary-color)', 500);
           alert('Tin nhắn đã được gửi thành công!');
         } else {
           throw new Error(`Server trả về lỗi: ${response.status}`);
         }
       } catch (error) {
         console.error('Lỗi:', error.message);
-        alert(`Không thể gửi tin nhắn: ${error.message}. Vui lòng kiểm tra xem ESP8266 có đang chạy và kết nối với mạng WiFi không. Địa chỉ: ${url}`);
+        alert(`Không thể gửi tin nhắn: ${error.message}. Vui lòng kiểm tra URL ngrok hoặc kết nối mạng. Địa chỉ: ${url}`);
       }
     }
   </script>
