@@ -4,12 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LED Matrix Control Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary-color: #ff6f61;
-      --secondary-color: #2d2d2d;
+      --primary-color: #ff3e6c;
+      --secondary-color: #1a1a2e;
       --accent-color: #ffffff;
-      --shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      --glow-color: #ff3e6c;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      --bg-gradient: linear-gradient(135deg, #1a1a2e, #16213e);
     }
 
     * {
@@ -19,14 +22,15 @@
     }
 
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(145deg, #1e1e1e, #2d2d2d);
+      font-family: 'Roboto', sans-serif;
+      background: var(--bg-gradient);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       overflow: hidden;
       position: relative;
+      color: var(--accent-color);
     }
 
     /* Hiệu ứng nền động */
@@ -37,19 +41,19 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle, rgba(255, 111, 97, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
-      animation: pulse 8s infinite;
+      background: radial-gradient(circle, rgba(255, 62, 108, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+      animation: pulse 10s infinite;
       z-index: 0;
     }
 
     .container {
       background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(15px);
       padding: 40px;
-      border-radius: 15px;
+      border-radius: 20px;
       box-shadow: var(--shadow);
       width: 100%;
-      max-width: 500px;
+      max-width: 600px;
       position: relative;
       z-index: 1;
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -57,20 +61,20 @@
     }
 
     h1 {
-      color: var(--accent-color);
-      font-size: 2rem;
-      font-weight: 600;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
       margin-bottom: 30px;
       text-transform: uppercase;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
       background: linear-gradient(90deg, var(--primary-color), #ff9a9e);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 10px rgba(255, 62, 108, 0.5);
       animation: textGlow 2s infinite alternate;
     }
 
     .input-wrapper {
-      position: relative;
       margin-bottom: 25px;
     }
 
@@ -82,7 +86,7 @@
       background: rgba(255, 255, 255, 0.1);
       color: var(--accent-color);
       font-size: 1rem;
-      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
       transition: all 0.3s ease;
     }
 
@@ -94,8 +98,91 @@
     input[type="text"]:focus {
       background: rgba(255, 255, 255, 0.15);
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(255, 111, 97, 0.3);
+      box-shadow: 0 5px 15px rgba(255, 62, 108, 0.3);
       outline: none;
+    }
+
+    .slider-wrapper {
+      margin-bottom: 25px;
+    }
+
+    .slider-wrapper label {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 10px;
+      color: var(--accent-color);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      -webkit-appearance: none;
+      height: 8px;
+      background: linear-gradient(90deg, var(--primary-color) 0%, #ff9a9e 100%);
+      border-radius: 5px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      background: var(--accent-color);
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(255, 62, 108, 0.5);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+      box-shadow: 0 0 15px rgba(255, 62, 108, 0.8);
+    }
+
+    .effect-wrapper {
+      margin-bottom: 25px;
+    }
+
+    .effect-wrapper label {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 10px;
+      color: var(--accent-color);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .effect-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .effect-button {
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      color: var(--accent-color);
+      font-size: 0.9rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .effect-button:hover {
+      background: rgba(255, 62, 108, 0.2);
+      border-color: var(--primary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 62, 108, 0.3);
+    }
+
+    .effect-button.active {
+      background: var(--primary-color);
+      border-color: var(--primary-color);
+      box-shadow: 0 0 15px rgba(255, 62, 108, 0.5);
     }
 
     button {
@@ -103,9 +190,9 @@
       padding: 15px;
       background: var(--primary-color);
       color: var(--accent-color);
-      font-weight: 600;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 2px;
       border: none;
       border-radius: 10px;
       cursor: pointer;
@@ -128,13 +215,13 @@
     }
 
     button:hover::after {
-      width: 300px;
-      height: 300px;
+      width: 400px;
+      height: 400px;
     }
 
     button:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(255, 111, 97, 0.4);
+      box-shadow: 0 8px 20px rgba(255, 62, 108, 0.5);
     }
 
     button:active {
@@ -148,16 +235,31 @@
     }
 
     @keyframes textGlow {
-      0% { text-shadow: 0 0 5px rgba(255, 111, 97, 0.5); }
-      100% { text-shadow: 0 0 15px rgba(255, 111, 97, 0.8); }
+      0% { text-shadow: 0 0 5px rgba(255, 62, 108, 0.5); }
+      100% { text-shadow: 0 0 15px rgba(255, 62, 108, 0.8); }
     }
 
-    @keyframes vedPulse {
+    @keyframes pulse {
       0% { opacity: 0.5; }
       100% { opacity: 0; }
     }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+        max-width: 90%;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      .effect-buttons {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
@@ -165,19 +267,51 @@
     <div class="input-wrapper">
       <input type="text" id="message" placeholder="Enter text for LED Matrix">
     </div>
+    <div class="slider-wrapper">
+      <label>Scroll Speed</label>
+      <input type="range" id="speed" min="10" max="100" value="50">
+    </div>
+    <div class="effect-wrapper">
+      <label>Effect</label>
+      <div class="effect-buttons">
+        <div class="effect-button" data-effect="scroll-left">Scroll Left</div>
+        <div class="effect-button" data-effect="scroll-right">Scroll Right</div>
+        <div class="effect-button" data-effect="fade">Fade</div>
+        <div class="effect-button" data-effect="wipe">Wipe</div>
+        <div class="effect-button" data-effect="opening">Opening</div>
+        <div class="effect-button" data-effect="closing">Closing</div>
+      </div>
+    </div>
     <button onclick="sendMessage()">Send to Matrix</button>
   </div>
 
   <script>
+    // Xử lý chọn hiệu ứng
+    const effectButtons = document.querySelectorAll('.effect-button');
+    let selectedEffect = 'scroll-left'; // Mặc định là scroll-left
+
+    effectButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        effectButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        selectedEffect = button.getAttribute('data-effect');
+      });
+    });
+
+    // Đặt hiệu ứng mặc định
+    document.querySelector('.effect-button[data-effect="scroll-left"]').classList.add('active');
+
     function sendMessage() {
       const message = document.getElementById('message').value;
+      const speed = document.getElementById('speed').value;
+
       if (message) {
         fetch('https://e014-2402-800-629c-7d19-78e4-e5da-f46c-9b05.ngrok-free.app/update', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
-          body: 'text=' + encodeURIComponent(message)
+          body: `text=${encodeURIComponent(message)}&speed=${speed}&effect=${selectedEffect}`
         })
         .then(response => response.text())
         .then(data => {
