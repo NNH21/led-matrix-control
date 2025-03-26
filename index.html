@@ -49,7 +49,7 @@
       padding: 3rem;
       border-radius: 25px;
       box-shadow: var(--shadow);
-      max-width: 800px;
+      max-width: 600px; /* Giảm max-width để giao diện gọn gàng hơn */
       width: 90%;
       border: 2px solid rgba(0, 240, 255, 0.2);
       animation: fadeInUp 1.5s ease-out;
@@ -71,9 +71,9 @@
 
     h1 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 3rem;
+      font-size: 3.5rem; /* Tăng kích thước tiêu đề */
       text-align: center;
-      margin-bottom: 2.5rem;
+      margin-bottom: 3rem; /* Tăng khoảng cách dưới tiêu đề */
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -116,8 +116,8 @@
 
     .slider-wrapper label {
       color: var(--primary);
-      font-size: 1.2rem;
-      margin-bottom: 0.8rem;
+      font-size: 1.3rem; /* Tăng kích thước nhãn */
+      margin-bottom: 1rem; /* Tăng khoảng cách dưới nhãn */
       display: block;
       text-shadow: 0 0 5px var(--glow);
       text-transform: uppercase;
@@ -156,8 +156,8 @@
 
     .effect-wrapper label {
       color: var(--primary);
-      font-size: 1.2rem;
-      margin-bottom: 0.8rem;
+      font-size: 1.3rem; /* Tăng kích thước nhãn */
+      margin-bottom: 1rem; /* Tăng khoảng cách dưới nhãn */
       display: block;
       text-shadow: 0 0 5px var(--glow);
       text-transform: uppercase;
@@ -165,18 +165,18 @@
     }
 
     .effect-buttons {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 1rem;
+      display: flex; /* Sử dụng flex để căn giữa và cân đối */
+      justify-content: center;
+      gap: 2rem; /* Tăng khoảng cách giữa các nút */
     }
 
     .effect-button {
-      padding: 1rem;
+      padding: 1rem 2rem; /* Tăng padding để nút lớn hơn */
       background: rgba(255, 255, 255, 0.05);
       border: 2px solid rgba(0, 240, 255, 0.3);
       border-radius: 10px;
       color: var(--accent);
-      font-size: 1rem;
+      font-size: 1.1rem; /* Tăng kích thước chữ */
       text-align: center;
       cursor: pointer;
       transition: all 0.4s ease;
@@ -223,7 +223,7 @@
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       color: #0d0d1a;
       font-weight: 700;
-      font-size: 1.2rem;
+      font-size: 1.3rem; /* Tăng kích thước chữ */
       border: none;
       border-radius: 12px;
       cursor: pointer;
@@ -288,11 +288,12 @@
       }
 
       h1 {
-        font-size: 2rem;
+        font-size: 2.5rem; /* Giảm kích thước tiêu đề trên mobile */
       }
 
       .effect-buttons {
-        grid-template-columns: repeat(2, 1fr);
+        flex-direction: column; /* Xếp dọc trên mobile */
+        gap: 1rem;
       }
     }
   </style>
@@ -312,10 +313,6 @@
       <div class="effect-buttons">
         <div class="effect-button" data-effect="scroll-left">Cuộn trái</div>
         <div class="effect-button" data-effect="scroll-right">Cuộn phải</div>
-        <div class="effect-button" data-effect="fade">Mờ dần</div>
-        <div class="effect-button" data-effect="wipe">Quét</div>
-        <div class="effect-button" data-effect="opening">Mở ra</div>
-        <div class="effect-button" data-effect="closing">Đóng lại</div>
       </div>
     </div>
     <button onclick="sendMessage()">Gửi đến Matrix</button>
@@ -344,7 +341,7 @@
         return;
       }
 
-      const url = 'https://75d7-2402-800-629c-7d19-78e4-e5da-f46c-9b05.ngrok-free.app/update';
+      const url = 'https://eeef-2402-800-629c-7d19-78e4-e5da-f46c-9b05.ngrok-free.app/update';
       const data = `text=${encodeURIComponent(message)}&speed=${speed}&effect=${selectedEffect}`;
 
       try {
