@@ -46,10 +46,10 @@
     .container {
       background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(15px);
-      padding: 3rem;
+      padding: 3.5rem; /* Tăng padding để thoáng hơn */
       border-radius: 25px;
       box-shadow: var(--shadow);
-      max-width: 600px; /* Giảm max-width để giao diện gọn gàng hơn */
+      max-width: 650px; /* Tăng nhẹ max-width để cân đối */
       width: 90%;
       border: 2px solid rgba(0, 240, 255, 0.2);
       animation: fadeInUp 1.5s ease-out;
@@ -71,24 +71,24 @@
 
     h1 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 3.5rem; /* Tăng kích thước tiêu đề */
+      font-size: 4rem; /* Tăng kích thước tiêu đề */
       text-align: center;
-      margin-bottom: 3rem; /* Tăng khoảng cách dưới tiêu đề */
+      margin-bottom: 3.5rem; /* Tăng khoảng cách dưới tiêu đề */
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 20px var(--glow);
+      text-shadow: 0 0 25px var(--glow);
       animation: neonPulse 2s infinite alternate;
     }
 
     .input-wrapper {
       position: relative;
-      margin-bottom: 2.5rem;
+      margin-bottom: 3rem; /* Tăng khoảng cách */
     }
 
     input[type="text"] {
       width: 100%;
-      padding: 1.2rem;
+      padding: 1.3rem; /* Tăng padding */
       border: 2px solid rgba(0, 240, 255, 0.3);
       border-radius: 12px;
       background: rgba(255, 255, 255, 0.05);
@@ -110,14 +110,68 @@
       outline: none;
     }
 
+    .history-wrapper {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+
+    .history-toggle {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .history-toggle:hover {
+      color: var(--secondary);
+      text-shadow: 0 0 10px var(--glow);
+    }
+
+    .history-list {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      max-height: 200px;
+      overflow-y: auto;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(0, 240, 255, 0.3);
+      border-radius: 12px;
+      z-index: 10;
+      padding: 0.5rem;
+    }
+
+    .history-list.show {
+      display: block;
+    }
+
+    .history-item {
+      padding: 0.8rem;
+      color: var(--accent);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .history-item:hover {
+      background: rgba(0, 240, 255, 0.2);
+      border-radius: 8px;
+    }
+
     .slider-wrapper {
-      margin-bottom: 2.5rem;
+      margin-bottom: 3rem; /* Tăng khoảng cách */
     }
 
     .slider-wrapper label {
       color: var(--primary);
-      font-size: 1.3rem; /* Tăng kích thước nhãn */
-      margin-bottom: 1rem; /* Tăng khoảng cách dưới nhãn */
+      font-size: 1.4rem; /* Tăng kích thước nhãn */
+      margin-bottom: 1.2rem; /* Tăng khoảng cách dưới nhãn */
       display: block;
       text-shadow: 0 0 5px var(--glow);
       text-transform: uppercase;
@@ -151,13 +205,13 @@
     }
 
     .effect-wrapper {
-      margin-bottom: 2.5rem;
+      margin-bottom: 3rem;
     }
 
     .effect-wrapper label {
       color: var(--primary);
-      font-size: 1.3rem; /* Tăng kích thước nhãn */
-      margin-bottom: 1rem; /* Tăng khoảng cách dưới nhãn */
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
       display: block;
       text-shadow: 0 0 5px var(--glow);
       text-transform: uppercase;
@@ -165,18 +219,18 @@
     }
 
     .effect-buttons {
-      display: flex; /* Sử dụng flex để căn giữa và cân đối */
+      display: flex;
       justify-content: center;
-      gap: 2rem; /* Tăng khoảng cách giữa các nút */
+      gap: 2.5rem; /* Tăng khoảng cách giữa các nút */
     }
 
     .effect-button {
-      padding: 1rem 2rem; /* Tăng padding để nút lớn hơn */
+      padding: 1.2rem 2.5rem; /* Tăng padding */
       background: rgba(255, 255, 255, 0.05);
       border: 2px solid rgba(0, 240, 255, 0.3);
       border-radius: 10px;
       color: var(--accent);
-      font-size: 1.1rem; /* Tăng kích thước chữ */
+      font-size: 1.2rem; /* Tăng kích thước chữ */
       text-align: center;
       cursor: pointer;
       transition: all 0.4s ease;
@@ -217,13 +271,56 @@
       border-color: var(--primary);
     }
 
+    .checkbox-wrapper {
+      margin-bottom: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .checkbox-wrapper label {
+      color: var(--primary);
+      font-size: 1.4rem;
+      text-shadow: 0 0 5px var(--glow);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    input[type="checkbox"] {
+      -webkit-appearance: none;
+      width: 24px;
+      height: 24px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(0, 240, 255, 0.3);
+      border-radius: 5px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    input[type="checkbox"]:checked {
+      background: var(--primary);
+      border-color: var(--primary);
+      box-shadow: 0 0 15px var(--glow);
+    }
+
+    input[type="checkbox"]:checked::after {
+      content: '✔';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #0d0d1a;
+      font-size: 1rem;
+    }
+
     button {
       width: 100%;
-      padding: 1.5rem;
+      padding: 1.8rem; /* Tăng padding */
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       color: #0d0d1a;
       font-weight: 700;
-      font-size: 1.3rem; /* Tăng kích thước chữ */
+      font-size: 1.4rem; /* Tăng kích thước chữ */
       border: none;
       border-radius: 12px;
       cursor: pointer;
@@ -283,17 +380,17 @@
 
     @media (max-width: 600px) {
       .container {
-        padding: 2rem;
+        padding: 2.5rem;
         max-width: 95%;
       }
 
       h1 {
-        font-size: 2.5rem; /* Giảm kích thước tiêu đề trên mobile */
+        font-size: 3rem;
       }
 
       .effect-buttons {
-        flex-direction: column; /* Xếp dọc trên mobile */
-        gap: 1rem;
+        flex-direction: column;
+        gap: 1.5rem;
       }
     }
   </style>
@@ -303,10 +400,18 @@
     <h1>LED Matrix Control</h1>
     <div class="input-wrapper">
       <input type="text" id="message" placeholder="Nhập tin nhắn cho LED Matrix">
+      <div class="history-wrapper">
+        <button class="history-toggle">▼</button>
+        <div class="history-list" id="historyList"></div>
+      </div>
     </div>
     <div class="slider-wrapper">
       <label>Tốc độ cuộn</label>
       <input type="range" id="speed" min="10" max="100" value="50">
+    </div>
+    <div class="slider-wrapper">
+      <label>Độ sáng</label>
+      <input type="range" id="brightness" min="0" max="15" value="2">
     </div>
     <div class="effect-wrapper">
       <label>Hiệu ứng</label>
@@ -314,6 +419,10 @@
         <div class="effect-button" data-effect="scroll-left">Cuộn trái</div>
         <div class="effect-button" data-effect="scroll-right">Cuộn phải</div>
       </div>
+    </div>
+    <div class="checkbox-wrapper">
+      <input type="checkbox" id="blink">
+      <label>Nhấp nháy</label>
     </div>
     <button onclick="sendMessage()">Gửi đến Matrix</button>
   </div>
@@ -332,17 +441,60 @@
 
     document.querySelector('.effect-button[data-effect="scroll-left"]').classList.add('active');
 
+    // Xử lý lịch sử tin nhắn
+    const historyList = document.getElementById('historyList');
+    const historyToggle = document.querySelector('.history-toggle');
+    const messageInput = document.getElementById('message');
+    let history = JSON.parse(localStorage.getItem('messageHistory')) || [];
+
+    // Hiển thị lịch sử tin nhắn đã lưu
+    function loadHistory() {
+      historyList.innerHTML = '';
+      history.forEach(msg => {
+        const item = document.createElement('div');
+        item.classList.add('history-item');
+        item.textContent = msg;
+        item.addEventListener('click', () => {
+          messageInput.value = msg;
+          historyList.classList.remove('show');
+          historyToggle.textContent = '▼';
+        });
+        historyList.appendChild(item);
+      });
+    }
+
+    // Lưu tin nhắn vào lịch sử
+    function saveMessage(message) {
+      if (message && !history.includes(message)) {
+        history.push(message);
+        localStorage.setItem('messageHistory', JSON.stringify(history));
+        loadHistory();
+      }
+    }
+
+    // Hiển thị/ẩn lịch sử tin nhắn
+    historyToggle.addEventListener('click', () => {
+      historyList.classList.toggle('show');
+      historyToggle.textContent = historyList.classList.contains('show') ? '▲' : '▼';
+    });
+
+    // Tải lịch sử khi khởi động
+    loadHistory();
+
     async function sendMessage() {
       const message = document.getElementById('message').value;
       const speed = document.getElementById('speed').value;
+      const brightness = document.getElementById('brightness').value;
+      const blink = document.getElementById('blink').checked ? 'on' : 'off';
+      const clock = message.trim() === '' ? 'on' : 'off'; // Bật hiển thị thời gian nếu ô nhập trống
 
-      if (!message) {
-        alert('Vui lòng nhập tin nhắn!');
+      if (!message && clock === 'off') {
+        alert('Vui lòng nhập tin nhắn hoặc để trống để hiển thị thời gian!');
         return;
       }
 
-      const url = 'https://eeef-2402-800-629c-7d19-78e4-e5da-f46c-9b05.ngrok-free.app/update';
-      const data = `text=${encodeURIComponent(message)}&speed=${speed}&effect=${selectedEffect}`;
+      const url = 'https://f801-2402-800-629c-7d19-78e4-e5da-f46c-9b05.ngrok-free.app/update';
+      const data = `text=${encodeURIComponent(message)}&speed=${speed}&effect=${selectedEffect}&brightness=${brightness}&blink=${blink}&clock=${clock}`;
 
       try {
         const response = await fetch(url, {
@@ -356,7 +508,10 @@
         if (response.ok) {
           const result = await response.text();
           console.log('Thành công:', result);
-          document.getElementById('message').value = '';
+          if (message) {
+            saveMessage(message); // Lưu tin nhắn vào lịch sử
+            document.getElementById('message').value = '';
+          }
           const button = document.querySelector('button');
           button.style.background = 'linear-gradient(90deg, #00ff99, #00f0ff)';
           setTimeout(() => button.style.background = 'linear-gradient(90deg, var(--primary), var(--secondary))', 500);
