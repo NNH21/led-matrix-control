@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <style>
+    /* Keep the existing CSS unchanged as per your request */
     :root {
       --primary: #00f0ff;
       --secondary: #ff00ff;
@@ -429,7 +430,7 @@
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
   <script>
-    // Initialize Particles.js
+    // Initialize Particles.js (unchanged)
     particlesJS("particles-js", {
       particles: {
         number: { value: 80, density: { enable: true, value_area: 800 } },
@@ -448,7 +449,7 @@
       retina_detect: true
     });
 
-    // Firebase Configuration
+    // Firebase Configuration (replace with your Firebase config)
     const firebaseConfig = {
       apiKey: "AIzaSyCBU4ysa6D-2J6-T0xRkHBArr0ydek4WDg",
       authDomain: "userinfo-3dcb7.firebaseapp.com",
@@ -515,15 +516,18 @@
         return;
       }
 
+      // Kiểm tra độ dài mật khẩu
       if (password.length < 6) {
         alert('Mật khẩu phải có ít nhất 6 ký tự!');
         return;
       }
 
       try {
-        const email = `${username}@ledmatrix.com`;
+        // Use the username as part of the email (Firebase Auth requires an email)
+        const email = `${username}@ledmatrix.com`; // Dummy domain for Firebase Auth
         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
 
+        // Store the username in Firestore
         await db.collection('users').doc(userCredential.user.uid).set({
           username: username,
           createdAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -555,13 +559,32 @@
       }
 
       try {
+        // Kiểm tra xem username có tồn tại trong Firestore không
+        const usersRef = db.collection('users');
+        const query = usersRef.where('username', '==', username);
+        const snapshot = await query.get();
+
+        if (snapshot.empty) {
+          // Không tìm thấy username trong Firestore
+          alert('Tài khoản không tồn tại! Vui lòng đăng ký để tiếp tục.');
+          showRegisterForm();
+          return;
+        }
+
+        // Nếu username tồn tại, tiến hành đăng nhập
         const email = `${username}@ledmatrix.com`;
         await auth.signInWithEmailAndPassword(email, password);
         localStorage.setItem('isLoggedIn', 'true');
-        window.location.href = 'index.html'; // Chuyển hướng trực tiếp đến index.html
+        window.location.href = 'index.html';
       } catch (error) {
         console.error('Lỗi đăng nhập:', error);
-        alert('Tài khoản hoặc mật khẩu không đúng! Vui lòng kiểm tra lại.');
+        if (error.code === 'auth/invalid-credential') {
+          alert('Mật khẩu không đúng! Vui lòng thử lại.');
+        } else if (error.code === 'auth/invalid-email') {
+          alert('Email không hợp lệ!');
+        } else {
+          alert(`Lỗi: ${error.code} - ${error.message}`);
+        }
       }
     }
 
