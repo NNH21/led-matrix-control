@@ -552,41 +552,38 @@
     async function login() {
       const username = document.getElementById('login-username').value;
       const password = document.getElementById('login-password').value;
-
+  
       if (!username || !password) {
-        alert('Vui lòng nhập đầy đủ thông tin!');
-        return;
-      }
-
-      try {
-        // Kiểm tra xem username có tồn tại trong Firestore không
-        const usersRef = db.collection('users');
-        const query = usersRef.where('username', '==', username);
-        const snapshot = await query.get();
-
-        if (snapshot.empty) {
-          // Không tìm thấy username trong Firestore
-          alert('Tài khoản không tồn tại! Vui lòng đăng ký để tiếp tục.');
-          showRegisterForm();
+          alert('Vui lòng nhập đầy đủ thông tin!');
           return;
-        }
-
-        // Nếu username tồn tại, tiến hành đăng nhập
-        const email = `${username}@ledmatrix.com`;
-        await auth.signInWithEmailAndPassword(email, password);
-        localStorage.setItem('isLoggedIn', 'true');
-        window.location.href = 'index.html';
-      } catch (error) {
-        console.error('Lỗi đăng nhập:', error);
-        if (error.code === 'auth/invalid-credential') {
-          alert('Mật khẩu không đúng! Vui lòng thử lại.');
-        } else if (error.code === 'auth/invalid-email') {
-          alert('Email không hợp lệ!');
-        } else {
-          alert(`Lỗi: ${error.code} - ${error.message}`);
-        }
       }
-    }
+  
+      try {
+          // Kiểm tra xem username có tồn tại trong Firestore không
+          const usersRef = db.collection('users');
+          const query = usersRef.where('username', '==', username);
+          const snapshot = await query.get();
+  
+          if (snapshot.empty) {
+              alert('Tài khoản hoặc mật khẩu không đúng. Vui lòng thử lại!');
+              return;
+          }
+  
+          // Nếu username tồn tại, tiến hành đăng nhập
+          const email = `${username}@ledmatrix.com`;
+          try {
+              await auth.signInWithEmailAndPassword(email, password);
+              localStorage.setItem('isLoggedIn', 'true');
+              window.location.href = 'index.html';
+          } catch (authError) {
+              console.error('Lỗi xác thực:', authError);
+              alert('Tài khoản hoặc mật khẩu không đúng. Vui lòng thử lại!');
+          }
+      } catch (error) {
+          console.error('Lỗi hệ thống:', error);
+          alert('Đã xảy ra lỗi hệ thống. Vui lòng thử lại sau!');
+      }
+  }
 
     document.addEventListener('keydown', function(event) {
       if (event.ctrlKey && event.keyCode === 85) {
