@@ -28,7 +28,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
+      overflow-x: hidden; /* Ngăn tràn ngang */
       position: relative;
       color: var(--accent);
     }
@@ -49,7 +49,7 @@
       padding: 4rem;
       border-radius: 30px;
       box-shadow: var(--shadow);
-      max-width: 900px;
+      max-width: 900px; /* Giữ nguyên cho máy tính */
       width: 90%;
       border: 2px solid rgba(0, 240, 255, 0.2);
       animation: fadeInUp 1.5s ease-out;
@@ -71,7 +71,7 @@
 
     h1 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 5rem;
+      font-size: 5rem; /* Kích thước mặc định cho máy tính */
       text-align: center;
       margin-bottom: 4.5rem;
       background: linear-gradient(90deg, var(--primary), var(--secondary));
@@ -358,19 +358,164 @@
       100% { left: 100%; }
     }
 
-    @media (max-width: 600px) {
+    /* Media query cho tablet (max-width: 768px) */
+    @media (max-width: 768px) {
       .container {
-        padding: 3rem;
-        max-width: 95%;
+        max-width: 600px; /* Giảm kích thước container */
+        padding: 2.5rem; /* Giảm padding */
       }
 
       h1 {
-        font-size: 3.5rem;
+        font-size: 4rem; /* Giảm kích thước tiêu đề */
+        margin-bottom: 3rem;
+      }
+
+      input[type="text"] {
+        padding: 1rem; /* Giảm padding */
+        font-size: 1.1rem; /* Giảm kích thước chữ */
+      }
+
+      .slider-wrapper label {
+        font-size: 1.3rem; /* Giảm kích thước nhãn */
+        margin-bottom: 1rem;
+      }
+
+      input[type="range"] {
+        height: 8px; /* Giảm chiều cao thanh trượt */
+      }
+
+      input[type="range"]::-webkit-slider-thumb {
+        width: 24px; /* Giảm kích thước thumb */
+        height: 24px;
       }
 
       .effect-buttons {
-        flex-direction: column;
-        gap: 2rem;
+        gap: 2rem; /* Giảm khoảng cách giữa các nút */
+      }
+
+      .effect-button {
+        padding: 1rem 2rem; /* Giảm padding */
+        font-size: 1.1rem; /* Giảm kích thước chữ */
+      }
+
+      .checkbox-wrapper label {
+        font-size: 1.3rem; /* Giảm kích thước nhãn */
+      }
+
+      input[type="checkbox"] {
+        width: 24px; /* Giảm kích thước checkbox */
+        height: 24px;
+      }
+
+      input[type="checkbox"]:checked::after {
+        font-size: 1rem; /* Giảm kích thước dấu check */
+      }
+
+      input[type="number"] {
+        width: 80px; /* Giảm chiều rộng ô nhập */
+        padding: 0.6rem; /* Giảm padding */
+        font-size: 1rem; /* Giảm kích thước chữ */
+      }
+
+      button {
+        padding: 1.5rem; /* Giảm padding */
+        font-size: 1.3rem; /* Giảm kích thước chữ */
+      }
+    }
+
+    /* Media query cho di động (max-width: 480px) */
+    @media (max-width: 480px) {
+      .container {
+        max-width: 100%; /* Chiếm toàn bộ chiều rộng */
+        padding: 1.5rem; /* Giảm padding */
+      }
+
+      h1 {
+        font-size: 2.5rem; /* Giảm kích thước tiêu đề */
+        margin-bottom: 2rem;
+      }
+
+      .input-wrapper {
+        margin-bottom: 2rem; /* Giảm khoảng cách */
+      }
+
+      input[type="text"] {
+        padding: 0.8rem;
+        font-size: 1rem;
+      }
+
+      .slider-wrapper {
+        margin-bottom: 2rem;
+      }
+
+      .slider-wrapper label {
+        font-size: 1.1rem;
+        margin-bottom: 0.8rem;
+      }
+
+      input[type="range"] {
+        height: 6px;
+      }
+
+      input[type="range"]::-webkit-slider-thumb {
+        width: 20px;
+        height: 20px;
+      }
+
+      .effect-wrapper {
+        margin-bottom: 2rem;
+      }
+
+      .effect-wrapper label {
+        font-size: 1.1rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .effect-buttons {
+        flex-direction: column; /* Chuyển sang cột */
+        gap: 1.5rem; /* Giảm khoảng cách */
+      }
+
+      .effect-button {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+      }
+
+      .checkbox-wrapper {
+        margin-bottom: 2rem;
+        gap: 0.8rem;
+      }
+
+      .checkbox-wrapper label {
+        font-size: 1.1rem;
+      }
+
+      input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+      }
+
+      input[type="checkbox"]:checked::after {
+        font-size: 0.8rem;
+      }
+
+      .blink-interval-wrapper {
+        margin-left: 1rem;
+      }
+
+      .blink-interval-wrapper label {
+        font-size: 1rem;
+      }
+
+      input[type="number"] {
+        width: 70px;
+        padding: 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      button {
+        padding: 1rem;
+        font-size: 1.1rem;
       }
     }
   </style>
@@ -446,7 +591,7 @@
         return;
       }
 
-      const url = 'https://78a9-2402-800-629c-7d19-d132-f463-1119-5892.ngrok-free.app/update'; // CẬP NHẬT URL NGROK MỚI
+      const url = 'https://6e60-2402-800-629c-7d19-d132-f463-1119-5892.ngrok-free.app/update'; // CẬP NHẬT URL NGROK MỚI
       const data = `text=${encodeURIComponent(message)}&speed=${speed}&effect=${selectedEffect}&brightness=${brightness}&blink=${blink}&blinkInterval=${blinkInterval}`;
 
       try {
