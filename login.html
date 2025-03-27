@@ -189,7 +189,7 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(120deg, 🙂transparent, rgba(255, 255, 255, 0.3), transparent);
+      background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
       animation: shine 2s infinite;
     }
 
@@ -460,7 +460,13 @@
     };
 
     // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+    try {
+      firebase.initializeApp(firebaseConfig);
+      console.log('Firebase khởi tạo thành công!');
+    } catch (error) {
+      console.error('Lỗi khởi tạo Firebase:', error);
+    }
+
     const auth = firebase.auth();
     const db = firebase.firestore();
 
@@ -499,38 +505,38 @@
       const username = document.getElementById('register-username').value;
       const password = document.getElementById('register-password').value;
       const confirmPassword = document.getElementById('confirm-password').value;
-    
+
       if (!username || !password || !confirmPassword) {
         alert('Vui lòng nhập đầy đủ thông tin!');
         return;
       }
-    
+
       if (password !== confirmPassword) {
         alert('Mật khẩu xác nhận không khớp!');
         return;
       }
-    
+
       // Kiểm tra độ dài mật khẩu
       if (password.length < 6) {
         alert('Mật khẩu phải có ít nhất 6 ký tự!');
         return;
       }
-    
+
       try {
         // Use the username as part of the email (Firebase Auth requires an email)
         const email = `${username}@ledmatrix.com`; // Dummy domain for Firebase Auth
         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-    
+
         // Store the username in Firestore
         await db.collection('users').doc(userCredential.user.uid).set({
           username: username,
           createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
-    
+
         alert('Đăng ký thành công!');
         showLoginForm();
       } catch (error) {
-        console.error('Lỗi đăng ký:', error); // Ghi log lỗi chi tiết vào Console
+        console.error('Lỗi đăng ký:', error);
         if (error.code === 'auth/email-already-in-use') {
           alert('Tên đăng nhập đã tồn tại!');
         } else if (error.code === 'auth/invalid-email') {
@@ -546,23 +552,34 @@
     async function login() {
       const username = document.getElementById('login-username').value;
       const password = document.getElementById('login-password').value;
-    
+
       if (!username || !password) {
         alert('Vui lòng nhập đầy đủ thông tin!');
         return;
       }
-    
+
       try {
-        const email = `${username}@ledmatrix.com`; // Same dummy domain as used in registration
+        // Kiểm tra xem username có tồn tại trong Firestore không
+        const usersRef = db.collection('users');
+        const query = usersRef.where('username', '==', username);
+        const snapshot = await query.get();
+
+        if (snapshot.empty) {
+          // Không tìm thấy username trong Firestore
+          alert('Tài khoản không tồn tại! Vui lòng đăng ký để tiếp tục.');
+          showRegisterForm();
+          return;
+        }
+
+        // Nếu username tồn tại, tiến hành đăng nhập
+        const email = `${username}@ledmatrix.com`;
         await auth.signInWithEmailAndPassword(email, password);
         localStorage.setItem('isLoggedIn', 'true');
         window.location.href = 'index.html';
       } catch (error) {
-        console.error('Lỗi đăng nhập:', error); // Ghi log lỗi chi tiết vào Console
-        if (error.code === 'auth/user-not-found') {
-          alert('Tên đăng nhập không tồn tại!');
-        } else if (error.code === 'auth/wrong-password') {
-          alert('Mật khẩu không đúng!');
+        console.error('Lỗi đăng nhập:', error);
+        if (error.code === 'auth/invalid-credential') {
+          alert('Mật khẩu không đúng! Vui lòng thử lại.');
         } else if (error.code === 'auth/invalid-email') {
           alert('Email không hợp lệ!');
         } else {
