@@ -709,6 +709,7 @@
       </div>
     </div>
     <button onclick="sendMessage()">Gửi đến Matrix</button>
+    <button onclick="logout()" style="margin-top: 1rem;">Đăng xuất</button>
   </div>
 
   <!-- Firebase SDK -->
@@ -811,6 +812,24 @@
         alert(`Không thể gửi tin nhắn: ${error.message}. Vui lòng kiểm tra URL ngrok hoặc kết nối mạng. Địa chỉ: ${url}`);
       }
     }
+
+    async function logout() {
+        try {
+          await auth.signOut();
+          localStorage.removeItem('isLoggedIn');
+          window.location.href = 'login.html';
+        } catch (error) {
+          console.error('Lỗi đăng xuất:', error);
+          alert('Đã xảy ra lỗi khi đăng xuất. Vui lòng thử lại!');
+        }
+      }
+  
+      document.addEventListener('keydown', function(event) {
+        if (event.ctrlKey && event.keyCode === 85) {
+          event.preventDefault();
+          return false;
+        }
+      });
   
     document.addEventListener('keydown', function(event) {
       if (event.ctrlKey && event.keyCode === 85) {
