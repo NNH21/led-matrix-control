@@ -553,6 +553,12 @@
   </div>
 
   <script>
+    // Kiểm tra trạng thái đăng nhập
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+      alert('Vui lòng đăng nhập để truy cập!');
+      window.location.href = 'login.html';
+    }
+
     const effectButtons = document.querySelectorAll('.effect-button');
     const messageInput = document.getElementById('message');
     const speedSlider = document.getElementById('speed');

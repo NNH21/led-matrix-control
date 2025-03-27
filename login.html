@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - LED Matrix Control</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #00f0ff;
+      --secondary: #ff00ff;
+      --accent: #ffffff;
+      --background: #0d0d1a;
+      --glow: rgba(0, 240, 255, 0.5);
+      --shadow: 0 0 50px rgba(0, 240, 255, 0.4);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--background);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      color: var(--accent);
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
+      animation: rotateGlow 20s linear infinite;
+      z-index: -1;
+    }
+
+    .login-container {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(15px);
+      padding: 3rem;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      width: 100%;
+      max-width: 450px;
+      border: 2px solid rgba(0, 240, 255, 0.2);
+      animation: fadeInUp 1s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(0, 240, 255, 0.1), transparent);
+      animation: scan 5s linear infinite;
+      pointer-events: none;
+    }
+
+    h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 25px var(--glow);
+      animation: neonPulse 2s infinite alternate;
+    }
+
+    .form-wrapper {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      overflow: hidden;
+    }
+
+    .form {
+      position: absolute;
+      width: 100%;
+      transition: transform 0.5s ease, opacity 0.5s ease;
+      opacity: 0;
+    }
+
+    #login-form {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    #register-form {
+      transform: translateX(100%);
+    }
+
+    .form.active {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .form.hidden {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+
+    .input-group {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid rgba(0, 240, 255, 0.3);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--accent);
+      font-size: 1.1rem;
+      transition: all 0.4s ease;
+    }
+
+    input[type="text"]::placeholder,
+    input[type="password"]::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+      font-style: italic;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 20px var(--glow);
+      background: rgba(255, 255, 255, 0.1);
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 1.2rem;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      color: #0d0d1a;
+      font-weight: 700;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      box-shadow: 0 0 30px var(--glow);
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: shine 2s infinite;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 40px var(--glow);
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .toggle-link {
+      text-align: center;
+      margin-top: 1rem;
+      color: var(--primary);
+      font-size: 1rem;
+      text-shadow: 0 0 5px var(--glow);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-link:hover {
+      color: var(--secondary);
+      text-shadow: 0 0 10px var(--glow);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes neonPulse {
+      0% { text-shadow: 0 0 10px var(--glow); }
+      100% { text-shadow: 0 0 40px var(--glow); }
+    }
+
+    @keyframes rotateGlow {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    @keyframes scan {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    @keyframes shine {
+      0% { left: -100%; }
+      20% { left: 100%; }
+      100% { left: 100%; }
+    }
+
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 2rem;
+        max-width: 90%;
+      }
+
+      h2 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .form-wrapper {
+        height: 280px;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        padding: 0.8rem;
+        font-size: 1rem;
+      }
+
+      button {
+        padding: 1rem;
+        font-size: 1.1rem;
+      }
+
+      .toggle-link {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>LED Matrix Control</h2>
+    <div class="form-wrapper">
+      <!-- Form Đăng nhập -->
+      <form id="login-form" class="form active">
+        <div class="input-group">
+          <input type="text" id="login-username" placeholder="Tên đăng nhập" required>
+        </div>
+        <div class="input-group">
+          <input type="password" id="login-password" placeholder="Mật khẩu" required>
+        </div>
+        <button type="button" onclick="login()">Đăng nhập</button>
+        <div class="toggle-link" onclick="showRegisterForm()">Chưa có tài khoản? Đăng ký ngay!</div>
+      </form>
+
+      <!-- Form Đăng ký -->
+      <form id="register-form" class="form">
+        <div class="input-group">
+          <input type="text" id="register-username" placeholder="Tên đăng nhập" required>
+        </div>
+        <div class="input-group">
+          <input type="password" id="register-password" placeholder="Mật khẩu" required>
+        </div>
+        <button type="button" onclick="register()">Đăng ký</button>
+        <div class="toggle-link" onclick="showLoginForm()">Đã có tài khoản? Đăng nhập!</div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Chuyển đổi giữa form đăng nhập và đăng ký
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+
+    function showRegisterForm() {
+      loginForm.classList.remove('active');
+      loginForm.classList.add('hidden');
+      registerForm.classList.remove('hidden');
+      registerForm.classList.add('active');
+    }
+
+    function showLoginForm() {
+      registerForm.classList.remove('active');
+      registerForm.classList.add('hidden');
+      loginForm.classList.remove('hidden');
+      loginForm.classList.add('active');
+    }
+
+    // Xử lý đăng ký
+    function register() {
+      const username = document.getElementById('register-username').value;
+      const password = document.getElementById('register-password').value;
+
+      if (!username || !password) {
+        alert('Vui lòng nhập đầy đủ thông tin!');
+        return;
+      }
+
+      // Lưu thông tin tài khoản vào localStorage
+      const users = JSON.parse(localStorage.getItem('users')) || {};
+      if (users[username]) {
+        alert('Tên đăng nhập đã tồn tại! Vui lòng chọn tên khác.');
+        return;
+      }
+
+      users[username] = password;
+      localStorage.setItem('users', JSON.stringify(users));
+      alert('Đăng ký thành công! Vui lòng đăng nhập.');
+      showLoginForm();
+    }
+
+    // Xử lý đăng nhập
+    function login() {
+      const username = document.getElementById('login-username').value;
+      const password = document.getElementById('login-password').value;
+
+      if (!username || !password) {
+        alert('Vui lòng nhập đầy đủ thông tin!');
+        return;
+      }
+
+      // Kiểm tra thông tin đăng nhập
+      const users = JSON.parse(localStorage.getItem('users')) || {};
+      if (users[username] && users[username] === password) {
+        // Lưu trạng thái đăng nhập
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('currentUser', username);
+        // Chuyển hướng đến trang chính
+        window.location.href = 'index.html';
+      } else {
+        alert('Tên đăng nhập hoặc mật khẩu không đúng!');
+      }
+    }
+  </script>
+</body>
+</html>
