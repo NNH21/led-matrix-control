@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <style>
+    /* Giữ nguyên toàn bộ CSS cũ */
     :root {
       --primary: #00f0ff;
       --secondary: #ff00ff;
@@ -486,11 +487,11 @@
         return;
       }
 
-      const scriptURL = 'https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbwaDZ6E-DIbSF_4JQd3UYQDPlFzsOxAR4R9eSoqi-DXqHVqp1wY4vsIdLu23XXnBPpjyg/exec';
+      const backendUrl = 'http://localhost:3000/register'; // URL backend
       const data = { username, password };
 
       try {
-        const response = await fetch(scriptURL, {
+        const response = await fetch(backendUrl, {
           method: 'POST',
           body: JSON.stringify(data),
           headers: { 'Content-Type': 'application/json' }
@@ -517,11 +518,16 @@
         return;
       }
 
-      const scriptURL = 'https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbwaDZ6E-DIbSF_4JQd3UYQDPlFzsOxAR4R9eSoqi-DXqHVqp1wY4vsIdLu23XXnBPpjyg/exec';
-      const url = `${scriptURL}?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+      const backendUrl = 'http://localhost:3000/login'; // URL backend
+      const data = { username, password };
 
       try {
-        const response = await fetch(url);
+        const response = await fetch(backendUrl, {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: { 'Content-Type': 'application/json' }
+        });
+
         const result = await response.json();
         if (result.status === 'success') {
           localStorage.setItem('isLoggedIn', 'true');

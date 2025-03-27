@@ -6,6 +6,7 @@
   <title>LED Matrix Control Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    /* Giữ nguyên toàn bộ CSS cũ */
     :root {
       --primary: #00f0ff;
       --secondary: #ff00ff;
@@ -752,7 +753,7 @@
         return;
       }
 
-      const url = 'https://f8d7-2402-800-629c-7d19-50ad-ef9-4a17-dd5d.ngrok-free.app/update';
+      const url = 'https://20cb-2402-800-629c-7d19-50ad-ef9-4a17-dd5d.ngrok-free.app/update'; // Giữ nguyên URL gửi đến Matrix
       const data = `text=${encodeURIComponent(message)}&speed=${speed}&effect=${selectedEffect}&brightness=${brightness}&blink=${blink}&blinkInterval=${blinkInterval}`;
 
       try {
