@@ -520,7 +520,7 @@
     }
   </style>
 </head>
-<body>
+<body oncontextmenu="return false">
   <div class="container">
     <h1>LED Matrix Control</h1>
     <div class="input-wrapper">
@@ -591,7 +591,7 @@
         return;
       }
 
-      const url = 'https://6e60-2402-800-629c-7d19-d132-f463-1119-5892.ngrok-free.app/update'; // CẬP NHẬT URL NGROK MỚI
+      const url = 'https://6f24-2402-800-629c-7d19-d132-f463-1119-5892.ngrok-free.app/update'; // CẬP NHẬT URL NGROK MỚI
       const data = `text=${encodeURIComponent(message)}&speed=${speed}&effect=${selectedEffect}&brightness=${brightness}&blink=${blink}&blinkInterval=${blinkInterval}`;
 
       try {
@@ -619,6 +619,15 @@
         alert(`Không thể gửi tin nhắn: ${error.message}. Vui lòng kiểm tra URL ngrok hoặc kết nối mạng. Địa chỉ: ${url}`);
       }
     }
+
+    // Thêm tính năng vô hiệu hóa Ctrl+U
+    document.addEventListener('keydown', function(event) {
+      // Kiểm tra tổ hợp phím Ctrl+U (keyCode 85 là phím U)
+      if (event.ctrlKey && event.keyCode === 85) {
+        event.preventDefault(); // Ngăn hành động mặc định của Ctrl+U
+        return false;
+      }
+    });
   </script>
 </body>
 </html>
