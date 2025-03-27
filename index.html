@@ -725,22 +725,28 @@
       messagingSenderId: "232578188505",
       appId: "1:232578188505:web:81fb0a4c7ac7c7d4c5eac8"
     };
-
+  
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
-
-    // Check authentication state
+  
+    // Check login status immediately on page load
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+      window.location.href = 'login.html';
+    }
+  
+    // Check authentication state with Firebase
     auth.onAuthStateChanged((user) => {
       if (!user) {
         // User is not logged in, redirect to login page
+        localStorage.removeItem('isLoggedIn'); // Clear invalid login state
         window.location.href = 'login.html';
       } else {
         // User is logged in, set isLoggedIn in localStorage for consistency
         localStorage.setItem('isLoggedIn', 'true');
       }
     });
-
+  
     const effectButtons = document.querySelectorAll('.effect-button');
     const messageInput = document.getElementById('message');
     const speedSlider = document.getElementById('speed');
@@ -749,7 +755,7 @@
     const blinkIntervalInput = document.getElementById('blinkInterval');
     const blinkIntervalWrapper = document.getElementById('blinkIntervalWrapper');
     let selectedEffect = 'scroll-left';
-
+  
     effectButtons.forEach(button => {
       button.addEventListener('click', () => {
         effectButtons.forEach(btn => btn.classList.remove('active'));
@@ -757,29 +763,29 @@
         selectedEffect = button.getAttribute('data-effect');
       });
     });
-
+  
     document.querySelector('.effect-button[data-effect="scroll-left"]').classList.add('active');
-
+  
     blinkCheckbox.addEventListener('change', () => {
       const isBlinkEnabled = blinkCheckbox.checked;
       blinkIntervalWrapper.classList.toggle('show', isBlinkEnabled);
     });
-
+  
     async function sendMessage() {
       const message = messageInput.value;
       const speed = speedSlider.value;
       const brightness = brightnessSlider.value;
       const blink = blinkCheckbox.checked ? 'on' : 'off';
       const blinkInterval = blinkCheckbox.checked ? blinkIntervalInput.value : 500;
-
+  
       if (!message) {
         alert('Vui lòng nhập tin nhắn!');
         return;
       }
-
+  
       const url = 'https://1867-2402-800-629c-7d19-a8bf-dfe-253a-618b.ngrok-free.app/update'; // Keep the existing URL
       const data = `text=${encodeURIComponent(message)}&speed=${speed}&effect=${selectedEffect}&brightness=${brightness}&blink=${blink}&blinkInterval=${blinkInterval}`;
-
+  
       try {
         const response = await fetch(url, {
           method: 'POST',
@@ -788,7 +794,7 @@
           },
           body: data
         });
-
+  
         if (response.ok) {
           const result = await response.text();
           console.log('Thành công:', result);
@@ -805,7 +811,7 @@
         alert(`Không thể gửi tin nhắn: ${error.message}. Vui lòng kiểm tra URL ngrok hoặc kết nối mạng. Địa chỉ: ${url}`);
       }
     }
-
+  
     document.addEventListener('keydown', function(event) {
       if (event.ctrlKey && event.keyCode === 85) {
         event.preventDefault();
