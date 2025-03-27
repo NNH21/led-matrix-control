@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - LED Matrix Control</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <style>
     :root {
       --primary: #00f0ff;
@@ -12,7 +13,8 @@
       --accent: #ffffff;
       --background: #0d0d1a;
       --glow: rgba(0, 240, 255, 0.5);
-      --shadow: 0 0 50px rgba(0, 240, 255, 0.4);
+      --shadow: 0 0 60px rgba(0, 240, 255, 0.5);
+      --gradient: linear-gradient(45deg, #00f0ff, #ff00ff, #00f0ff);
     }
 
     * {
@@ -22,7 +24,7 @@
     }
 
     body {
-      font-family: 'Roboto', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       background: var(--background);
       min-height: 100vh;
       display: flex;
@@ -33,25 +35,24 @@
       color: var(--accent);
     }
 
-    body::before {
-      content: '';
+    /* Background Particle Effect */
+    #particles-js {
       position: absolute;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
-      animation: rotateGlow 20s linear infinite;
+      width: 100%;
+      height: 100%;
       z-index: -1;
+      background: var(--background);
     }
 
     .login-container {
       background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(15px);
-      padding: 3rem;
-      border-radius: 20px;
+      backdrop-filter: blur(20px);
+      padding: 4rem;
+      border-radius: 25px;
       box-shadow: var(--shadow);
       width: 100%;
-      max-width: 450px;
-      border: 2px solid rgba(0, 240, 255, 0.2);
+      max-width: 600px; /* Phóng to container */
+      border: 2px solid rgba(0, 240, 255, 0.3);
       animation: fadeInUp 1s ease-out;
       position: relative;
       overflow: hidden;
@@ -64,27 +65,27 @@
       left: -50%;
       width: 200%;
       height: 200%;
-      background: linear-gradient(45deg, transparent, rgba(0, 240, 255, 0.1), transparent);
-      animation: scan 5s linear infinite;
+      background: linear-gradient(45deg, transparent, rgba(0, 240, 255, 0.15), transparent);
+      animation: scan 6s linear infinite;
       pointer-events: none;
     }
 
     h2 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 2.5rem;
+      font-size: 3.5rem; /* Phóng to tiêu đề */
       text-align: center;
-      margin-bottom: 2rem;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      margin-bottom: 2.5rem;
+      background: var(--gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 25px var(--glow);
+      text-shadow: 0 0 30px var(--glow);
       animation: neonPulse 2s infinite alternate;
     }
 
     .form-wrapper {
       position: relative;
       width: 100%;
-      height: 300px;
+      height: 400px; /* Tăng chiều cao form để chứa thêm trường xác nhận mật khẩu */
       overflow: hidden;
     }
 
@@ -95,40 +96,42 @@
       opacity: 0;
     }
 
-    #login-form {
+    #login-form.active {
       transform: translateX(0);
       opacity: 1;
     }
 
-    #register-form {
-      transform: translateX(100%);
-    }
-
-    .form.active {
+    #register-form.active {
       transform: translateX(0);
       opacity: 1;
     }
 
-    .form.hidden {
+    #login-form.hidden {
       transform: translateX(-100%);
       opacity: 0;
     }
 
+    #register-form.hidden {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+
     .input-group {
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem; /* Tăng khoảng cách giữa các trường */
       position: relative;
     }
 
     input[type="text"],
     input[type="password"] {
       width: 100%;
-      padding: 1rem;
+      padding: 1.2rem 1.5rem; /* Tăng padding */
       border: 2px solid rgba(0, 240, 255, 0.3);
-      border-radius: 10px;
+      border-radius: 12px;
       background: rgba(255, 255, 255, 0.05);
       color: var(--accent);
-      font-size: 1.1rem;
+      font-size: 1.2rem; /* Tăng kích thước font */
       transition: all 0.4s ease;
+      font-family: 'Roboto', sans-serif;
     }
 
     input[type="text"]::placeholder,
@@ -140,27 +143,43 @@
     input[type="text"]:focus,
     input[type="password"]:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 20px var(--glow);
+      box-shadow: 0 0 25px var(--glow);
       background: rgba(255, 255, 255, 0.1);
       outline: none;
     }
 
+    .password-toggle {
+      position: absolute;
+      right: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--primary);
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: color 0.3s ease;
+    }
+
+    .password-toggle:hover {
+      color: var(--secondary);
+    }
+
     button {
       width: 100%;
-      padding: 1.2rem;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      padding: 1.5rem; /* Tăng padding */
+      background: var(--gradient);
       color: #0d0d1a;
       font-weight: 700;
-      font-size: 1.2rem;
+      font-size: 1.3rem; /* Tăng kích thước font */
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
       position: relative;
       overflow: hidden;
       transition: all 0.4s ease;
       text-transform: uppercase;
       letter-spacing: 2px;
-      box-shadow: 0 0 30px var(--glow);
+      box-shadow: 0 0 40px var(--glow);
+      font-family: 'Orbitron', sans-serif;
     }
 
     button::before {
@@ -176,7 +195,7 @@
 
     button:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 40px var(--glow);
+      box-shadow: 0 0 50px var(--glow);
     }
 
     button:active {
@@ -185,9 +204,9 @@
 
     .toggle-link {
       text-align: center;
-      margin-top: 1rem;
+      margin-top: 1.5rem;
       color: var(--primary);
-      font-size: 1rem;
+      font-size: 1.1rem; /* Tăng kích thước font */
       text-shadow: 0 0 5px var(--glow);
       cursor: pointer;
       transition: all 0.3s ease;
@@ -208,11 +227,6 @@
       100% { text-shadow: 0 0 40px var(--glow); }
     }
 
-    @keyframes rotateGlow {
-      0% { transform: translate(-50%, -50%) rotate(0deg); }
-      100% { transform: translate(-50%, -50%) rotate(360deg); }
-    }
-
     @keyframes scan {
       0% { transform: translate(-50%, -50%) rotate(0deg); }
       100% { transform: translate(-50%, -50%) rotate(360deg); }
@@ -224,39 +238,162 @@
       100% { left: 100%; }
     }
 
-    @media (max-width: 480px) {
+    /* Responsive cho laptop lớn (max-width: 1200px) */
+    @media (max-width: 1200px) {
       .login-container {
-        padding: 2rem;
-        max-width: 90%;
+        max-width: 550px;
+        padding: 3.5rem;
       }
 
       h2 {
-        font-size: 2rem;
+        font-size: 3rem;
+        margin-bottom: 2rem;
+      }
+
+      .form-wrapper {
+        height: 380px;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        padding: 1.1rem;
+        font-size: 1.1rem;
+      }
+
+      button {
+        padding: 1.3rem;
+        font-size: 1.2rem;
+      }
+    }
+
+    /* Responsive cho tablet (max-width: 1024px) */
+    @media (max-width: 1024px) {
+      .login-container {
+        max-width: 500px;
+        padding: 3rem;
+      }
+
+      h2 {
+        font-size: 2.8rem;
+        margin-bottom: 1.8rem;
+      }
+
+      .form-wrapper {
+        height: 360px;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        padding: 1rem;
+        font-size: 1rem;
+      }
+
+      button {
+        padding: 1.2rem;
+        font-size: 1.1rem;
+      }
+    }
+
+    /* Responsive cho tablet nhỏ (max-width: 768px) */
+    @media (max-width: 768px) {
+      .login-container {
+        max-width: 450px;
+        padding: 2.5rem;
+      }
+
+      h2 {
+        font-size: 2.5rem;
         margin-bottom: 1.5rem;
       }
 
       .form-wrapper {
-        height: 280px;
+        height: 340px;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        padding: 0.9rem;
+        font-size: 0.95rem;
+      }
+
+      button {
+        padding: 1rem;
+        font-size: 1rem;
+      }
+
+      .toggle-link {
+        font-size: 1rem;
+      }
+    }
+
+    /* Responsive cho mobile (max-width: 480px) */
+    @media (max-width: 480px) {
+      .login-container {
+        max-width: 90%;
+        padding: 2rem;
+      }
+
+      h2 {
+        font-size: 2rem;
+        margin-bottom: 1.2rem;
+      }
+
+      .form-wrapper {
+        height: 320px;
       }
 
       input[type="text"],
       input[type="password"] {
         padding: 0.8rem;
-        font-size: 1rem;
+        font-size: 0.9rem;
       }
 
       button {
-        padding: 1rem;
-        font-size: 1.1rem;
+        padding: 0.9rem;
+        font-size: 0.95rem;
       }
 
       .toggle-link {
         font-size: 0.9rem;
       }
     }
+
+    /* Responsive cho mobile rất nhỏ (max-width: 360px) */
+    @media (max-width: 360px) {
+      .login-container {
+        padding: 1.5rem;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+      }
+
+      .form-wrapper {
+        height: 300px;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        padding: 0.7rem;
+        font-size: 0.85rem;
+      }
+
+      button {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+      }
+
+      .toggle-link {
+        font-size: 0.85rem;
+      }
+    }
   </style>
 </head>
-<body>
+<body oncontextmenu="return false">
+  <!-- Particle Background -->
+  <div id="particles-js"></div>
+
   <div class="login-container">
     <h2>LED Matrix Control</h2>
     <div class="form-wrapper">
@@ -267,18 +404,24 @@
         </div>
         <div class="input-group">
           <input type="password" id="login-password" placeholder="Mật khẩu" required>
+          <i class="fas fa-eye password-toggle" onclick="togglePassword('login-password')"></i>
         </div>
         <button type="button" onclick="login()">Đăng nhập</button>
         <div class="toggle-link" onclick="showRegisterForm()">Chưa có tài khoản? Đăng ký ngay!</div>
       </form>
 
       <!-- Form Đăng ký -->
-      <form id="register-form" class="form">
+      <form id="register-form" class="form hidden">
         <div class="input-group">
           <input type="text" id="register-username" placeholder="Tên đăng nhập" required>
         </div>
         <div class="input-group">
           <input type="password" id="register-password" placeholder="Mật khẩu" required>
+          <i class="fas fa-eye password-toggle" onclick="togglePassword('register-password')"></i>
+        </div>
+        <div class="input-group">
+          <input type="password" id="confirm-password" placeholder="Xác nhận mật khẩu" required>
+          <i class="fas fa-eye password-toggle" onclick="togglePassword('confirm-password')"></i>
         </div>
         <button type="button" onclick="register()">Đăng ký</button>
         <div class="toggle-link" onclick="showLoginForm()">Đã có tài khoản? Đăng nhập!</div>
@@ -286,7 +429,28 @@
     </div>
   </div>
 
+  <!-- Thêm thư viện particles.js -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <script>
+    // Khởi tạo particles.js
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 80, density: { enable: true, value_area: 800 } },
+        color: { value: "#00f0ff" },
+        shape: { type: "circle" },
+        opacity: { value: 0.5, random: true },
+        size: { value: 3, random: true },
+        line_linked: { enable: true, distance: 150, color: "#ff00ff", opacity: 0.4, width: 1 },
+        move: { enable: true, speed: 2, direction: "none", random: false, straight: false, out_mode: "out", bounce: false }
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" }, resize: true },
+        modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
+      },
+      retina_detect: true
+    });
+
     // Chuyển đổi giữa form đăng nhập và đăng ký
     const loginForm = document.getElementById('login-form');
     const registerForm = document.getElementById('register-form');
@@ -305,31 +469,62 @@
       loginForm.classList.add('active');
     }
 
+    // Hiển thị/ẩn mật khẩu
+    function togglePassword(inputId) {
+      const input = document.getElementById(inputId);
+      const icon = input.nextElementSibling;
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    }
+
     // Xử lý đăng ký
-    function register() {
+    async function register() {
       const username = document.getElementById('register-username').value;
       const password = document.getElementById('register-password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
 
-      if (!username || !password) {
+      if (!username || !password || !confirmPassword) {
         alert('Vui lòng nhập đầy đủ thông tin!');
         return;
       }
 
-      // Lưu thông tin tài khoản vào localStorage
-      const users = JSON.parse(localStorage.getItem('users')) || {};
-      if (users[username]) {
-        alert('Tên đăng nhập đã tồn tại! Vui lòng chọn tên khác.');
+      if (password !== confirmPassword) {
+        alert('Mật khẩu xác nhận không khớp!');
         return;
       }
 
-      users[username] = password;
-      localStorage.setItem('users', JSON.stringify(users));
-      alert('Đăng ký thành công! Vui lòng đăng nhập.');
-      showLoginForm();
+      // Gửi dữ liệu đến Google Apps Script
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbwIwnJgJrUeU5Mbgr8OGADCZw9v1av4d5xy53k38ITDltTF-WiDbhrZYx9duAUSXClDsQ/exec'; // Thay bằng URL của Web App
+      const data = { username, password };
+
+      try {
+        const response = await fetch(scriptURL, {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: { 'Content-Type': 'application/json' }
+        });
+
+        const result = await response.json();
+        if (result.status === 'success') {
+          alert(result.message);
+          showLoginForm();
+        } else {
+          alert(result.message);
+        }
+      } catch (error) {
+        alert('Lỗi: ' + error.message);
+      }
     }
 
     // Xử lý đăng nhập
-    function login() {
+    async function login() {
       const username = document.getElementById('login-username').value;
       const password = document.getElementById('login-password').value;
 
@@ -338,18 +533,30 @@
         return;
       }
 
-      // Kiểm tra thông tin đăng nhập
-      const users = JSON.parse(localStorage.getItem('users')) || {};
-      if (users[username] && users[username] === password) {
-        // Lưu trạng thái đăng nhập
-        localStorage.setItem('isLoggedIn', 'true');
-        localStorage.setItem('currentUser', username);
-        // Chuyển hướng đến trang chính
-        window.location.href = 'index.html';
-      } else {
-        alert('Tên đăng nhập hoặc mật khẩu không đúng!');
+      // Gửi yêu cầu kiểm tra đăng nhập đến Google Apps Script
+      const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_URL'; // Thay bằng URL của Web App
+      const url = `${scriptURL}?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+
+      try {
+        const response = await fetch(url);
+        const result = await response.json();
+        if (result.status === 'success') {
+          window.location.href = 'dashboard.html'; // Chuyển hướng đến dashboard.html
+        } else {
+          alert(result.message);
+        }
+      } catch (error) {
+        alert('Lỗi: ' + error.message);
       }
     }
+
+    // Vô hiệu hóa Ctrl+U
+    document.addEventListener('keydown', function(event) {
+      if (event.ctrlKey && event.keyCode === 85) {
+        event.preventDefault();
+        return false;
+      }
+    });
   </script>
 </body>
 </html>
