@@ -559,19 +559,6 @@
       }
 
       try {
-        // Kiểm tra xem username có tồn tại trong Firestore không
-        const usersRef = db.collection('users');
-        const query = usersRef.where('username', '==', username);
-        const snapshot = await query.get();
-
-        if (snapshot.empty) {
-          // Không tìm thấy username trong Firestore
-          alert('Tài khoản không tồn tại! Vui lòng đăng ký để tiếp tục.');
-          showRegisterForm();
-          return;
-        }
-
-        // Nếu username tồn tại, tiến hành đăng nhập
         const email = `${username}@ledmatrix.com`;
         await auth.signInWithEmailAndPassword(email, password);
         localStorage.setItem('isLoggedIn', 'true');
@@ -579,7 +566,7 @@
       } catch (error) {
         console.error('Lỗi đăng nhập:', error);
         if (error.code === 'auth/invalid-credential') {
-          alert('Mật khẩu không đúng! Vui lòng thử lại.');
+          alert('Tài khoản hoặc mật khẩu không đúng!');
         } else if (error.code === 'auth/invalid-email') {
           alert('Email không hợp lệ!');
         } else {
