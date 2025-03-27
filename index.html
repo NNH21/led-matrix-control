@@ -6,7 +6,7 @@
   <title>LED Matrix Control Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* Giữ nguyên toàn bộ CSS cũ */
+    /* Keep the existing CSS unchanged as per your request */
     :root {
       --primary: #00f0ff;
       --secondary: #ff00ff;
@@ -711,11 +711,35 @@
     <button onclick="sendMessage()">Gửi đến Matrix</button>
   </div>
 
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
   <script>
-    // Kiểm tra trạng thái đăng nhập khi tải trang
-    if (!localStorage.getItem('isLoggedIn')) {
-      window.location.href = 'login.html';
-    }
+    // Firebase Configuration (replace with your Firebase config)
+    const firebaseConfig = {
+      apiKey: "your-api-key",
+      authDomain: "your-project-id.firebaseapp.com",
+      projectId: "your-project-id",
+      storageBucket: "your-project-id.appspot.com",
+      messagingSenderId: "your-sender-id",
+      appId: "your-app-id"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // Check authentication state
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        // User is not logged in, redirect to login page
+        window.location.href = 'login.html';
+      } else {
+        // User is logged in, set isLoggedIn in localStorage for consistency
+        localStorage.setItem('isLoggedIn', 'true');
+      }
+    });
 
     const effectButtons = document.querySelectorAll('.effect-button');
     const messageInput = document.getElementById('message');
@@ -753,7 +777,7 @@
         return;
       }
 
-      const url = 'https://20cb-2402-800-629c-7d19-50ad-ef9-4a17-dd5d.ngrok-free.app/update'; // Giữ nguyên URL gửi đến Matrix
+      const url = 'https://0117-171-225-184-64.ngrok-free.app/update'; // Keep the existing URL
       const data = `text=${encodeURIComponent(message)}&speed=${speed}&effect=${selectedEffect}&brightness=${brightness}&blink=${blink}&blinkInterval=${blinkInterval}`;
 
       try {

@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <style>
-    /* Giữ nguyên toàn bộ CSS cũ */
+    /* Keep the existing CSS unchanged as per your request */
     :root {
       --primary: #00f0ff;
       --secondary: #ff00ff;
@@ -189,7 +189,7 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      background: linear-gradient(120deg, 🙂transparent, rgba(255, 255, 255, 0.3), transparent);
       animation: shine 2s infinite;
     }
 
@@ -421,8 +421,16 @@
     </div>
   </div>
 
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+  <!-- Particles.js -->
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
   <script>
+    // Initialize Particles.js (unchanged)
     particlesJS("particles-js", {
       particles: {
         number: { value: 80, density: { enable: true, value_area: 800 } },
@@ -440,6 +448,21 @@
       },
       retina_detect: true
     });
+
+    // Firebase Configuration (replace with your Firebase config)
+    const firebaseConfig = {
+      apiKey: "AIzaSyCBU4ysa6D-2J6-T0xRkHBArr0ydek4WDg",
+      authDomain: "userinfo-3dcb7.firebaseapp.com",
+      projectId: "userinfo-3dcb7",
+      storageBucket: "userinfo-3dcb7.firebasestorage.app",
+      messagingSenderId: "232578188505",
+      appId: "1:232578188505:web:81fb0a4c7ac7c7d4c5eac8"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
 
     const loginForm = document.getElementById('login-form');
     const registerForm = document.getElementById('register-form');
@@ -487,25 +510,25 @@
         return;
       }
 
-      const backendUrl = 'http://localhost:3000/register'; // URL backend
-      const data = { username, password };
-
       try {
-        const response = await fetch(backendUrl, {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers: { 'Content-Type': 'application/json' }
+        // Use the username as part of the email (Firebase Auth requires an email)
+        const email = `${username}@ledmatrix.com`; // Dummy domain for Firebase Auth
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+
+        // Store the username in Firestore
+        await db.collection('users').doc(userCredential.user.uid).set({
+          username: username,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
 
-        const result = await response.json();
-        if (result.status === 'success') {
-          alert(result.message);
-          showLoginForm();
-        } else {
-          alert(result.message);
-        }
+        alert('Đăng ký thành công!');
+        showLoginForm();
       } catch (error) {
-        alert('Lỗi: ' + error.message);
+        if (error.code === 'auth/email-already-in-use') {
+          alert('Tên đăng nhập đã tồn tại!');
+        } else {
+          alert('Lỗi: ' + error.message);
+        }
       }
     }
 
@@ -518,25 +541,19 @@
         return;
       }
 
-      const backendUrl = 'http://localhost:3000/login'; // URL backend
-      const data = { username, password };
-
       try {
-        const response = await fetch(backendUrl, {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers: { 'Content-Type': 'application/json' }
-        });
-
-        const result = await response.json();
-        if (result.status === 'success') {
-          localStorage.setItem('isLoggedIn', 'true');
-          window.location.href = 'index.html';
-        } else {
-          alert(result.message);
-        }
+        const email = `${username}@ledmatrix.com`; // Same dummy domain as used in registration
+        await auth.signInWithEmailAndPassword(email, password);
+        localStorage.setItem('isLoggedIn', 'true');
+        window.location.href = 'index.html';
       } catch (error) {
-        alert('Lỗi: ' + error.message);
+        if (error.code === 'auth/user-not-found') {
+          alert('Tên đăng nhập không tồn tại!');
+        } else if (error.code === 'auth/wrong-password') {
+          alert('Mật khẩu không đúng!');
+        } else {
+          alert('Lỗi: ' + error.message);
+        }
       }
     }
 
