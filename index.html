@@ -358,102 +358,6 @@
       100% { left: 100%; }
     }
 
-    @media (max-width: 1200px) {
-      .container {
-        max-width: 800px;
-        padding: 3.5rem;
-      }
-
-      h1 {
-        font-size: 4.5rem;
-        margin-bottom: 4rem;
-      }
-
-      input[type="text"] {
-        padding: 1.3rem;
-        font-size: 1.2rem;
-      }
-
-      .slider-wrapper label {
-        font-size: 1.4rem;
-        margin-bottom: 1.3rem;
-      }
-
-      .effect-button {
-        padding: 1.2rem 2.5rem;
-        font-size: 1.2rem;
-      }
-
-      .checkbox-wrapper label {
-        font-size: 1.4rem;
-      }
-
-      button {
-        padding: 1.8rem;
-        font-size: 1.4rem;
-      }
-    }
-
-    @media (max-width: 1024px) {
-      .container {
-        max-width: 700px;
-        padding: 3rem;
-      }
-
-      h1 {
-        font-size: 4rem;
-        margin-bottom: 3.5rem;
-      }
-
-      input[type="text"] {
-        padding: 1.2rem;
-        font-size: 1.1rem;
-      }
-
-      .slider-wrapper label {
-        font-size: 1.3rem;
-        margin-bottom: 1.2rem;
-      }
-
-      input[type="range"] {
-        height: 9px;
-      }
-
-      input[type="range"]::-webkit-slider-thumb {
-        width: 26px;
-        height: 26px;
-      }
-
-      .effect-buttons {
-        gap: 2.5rem;
-      }
-
-      .effect-button {
-        padding: 1.1rem 2rem;
-        font-size: 1.1rem;
-      }
-
-      .checkbox-wrapper label {
-        font-size: 1.3rem;
-      }
-
-      input[type="checkbox"] {
-        width: 26px;
-        height: 26px;
-      }
-
-      input[type="number"] {
-        width: 90px;
-        padding: 0.7rem;
-        font-size: 1rem;
-      }
-
-      button {
-        padding: 1.6rem;
-        font-size: 1.3rem;
-      }
-    }
-
     @media (max-width: 768px) {
       .container {
         max-width: 600px;
@@ -461,17 +365,17 @@
       }
 
       h1 {
-        font-size: 3.5rem;
+        font-size: 4rem;
         margin-bottom: 3rem;
       }
 
       input[type="text"] {
         padding: 1rem;
-        font-size: 1rem;
+        font-size: 1.1rem;
       }
 
       .slider-wrapper label {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         margin-bottom: 1rem;
       }
 
@@ -489,12 +393,12 @@
       }
 
       .effect-button {
-        padding: 1rem 1.8rem;
-        font-size: 1rem;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
       }
 
       .checkbox-wrapper label {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
       }
 
       input[type="checkbox"] {
@@ -509,12 +413,12 @@
       input[type="number"] {
         width: 80px;
         padding: 0.6rem;
-        font-size: 0.9rem;
+        font-size: 1rem;
       }
 
       button {
-        padding: 1.4rem;
-        font-size: 1.2rem;
+        padding: 1.5rem;
+        font-size: 1.3rem;
       }
     }
 
@@ -535,7 +439,7 @@
 
       input[type="text"] {
         padding: 0.8rem;
-        font-size: 0.9rem;
+        font-size: 1rem;
       }
 
       .slider-wrapper {
@@ -572,7 +476,7 @@
 
       .effect-button {
         padding: 0.8rem 1.5rem;
-        font-size: 0.9rem;
+        font-size: 1rem;
       }
 
       .checkbox-wrapper {
@@ -604,7 +508,7 @@
       input[type="number"] {
         width: 70px;
         padding: 0.5rem;
-        font-size: 0.85rem;
+        font-size: 0.9rem;
       }
 
       button {
@@ -612,139 +516,41 @@
         font-size: 1.1rem;
       }
     }
-
-    @media (max-width: 360px) {
-      .container {
-        padding: 1rem;
-      }
-
-      h1 {
-        font-size: 2rem;
-        margin-bottom: 1.5rem;
-      }
-
-      input[type="text"] {
-        padding: 0.7rem;
-        font-size: 0.85rem;
-      }
-
-      .slider-wrapper label {
-        font-size: 1rem;
-        margin-bottom: 0.7rem;
-      }
-
-      input[type="range"] {
-        height: 5px;
-      }
-
-      input[type="range"]::-webkit-slider-thumb {
-        width: 18px;
-        height: 18px;
-      }
-
-      .effect-wrapper label {
-        font-size: 1rem;
-        margin-bottom: 0.7rem;
-      }
-
-      .effect-button {
-        padding: 0.7rem 1.2rem;
-        font-size: 0.85rem;
-      }
-
-      .checkbox-wrapper label {
-        font-size: 1rem;
-      }
-
-      input[type="checkbox"] {
-        width: 18px;
-        height: 18px;
-      }
-
-      input[type="checkbox"]:checked::after {
-        font-size: 0.7rem;
-      }
-
-      input[type="number"] {
-        width: 60px;
-        padding: 0.4rem;
-        font-size: 0.8rem;
-      }
-
-      button {
-        padding: 0.8rem;
-        font-size: 1rem;
-      }
-    }
   </style>
 </head>
 <body oncontextmenu="return false">
-  <div id="dashboard" style="display: none;">
-    <div class="container">
-      <h1>LED Matrix Control</h1>
-      <div class="input-wrapper">
-        <input type="text" id="message" placeholder="Nhập tin nhắn cho LED Matrix">
-      </div>
-      <div class="slider-wrapper">
-        <label>Tốc độ cuộn</label>
-        <input type="range" id="speed" min="10" max="100" value="50">
-      </div>
-      <div class="slider-wrapper">
-        <label>Độ sáng</label>
-        <input type="range" id="brightness" min="0" max="15" value="2">
-      </div>
-      <div class="effect-wrapper">
-        <label>Hiệu ứng</label>
-        <div class="effect-buttons">
-          <div class="effect-button" data-effect="scroll-left">Cuộn trái</div>
-          <div class="effect-button" data-effect="scroll-right">Cuộn phải</div>
-        </div>
-      </div>
-      <div class="checkbox-wrapper">
-        <input type="checkbox" id="blink">
-        <label>Nhấp nháy</label>
-        <div class="blink-interval-wrapper" id="blinkIntervalWrapper">
-          <label style="font-size: 1.2rem;">Thời gian trễ (ms):</label>
-          <input type="number" id="blinkInterval" min="100" value="500">
-        </div>
-      </div>
-      <button onclick="sendMessage()">Gửi đến Matrix</button>
+  <div class="container">
+    <h1>LED Matrix Control</h1>
+    <div class="input-wrapper">
+      <input type="text" id="message" placeholder="Nhập tin nhắn cho LED Matrix">
     </div>
+    <div class="slider-wrapper">
+      <label>Tốc độ cuộn</label>
+      <input type="range" id="speed" min="10" max="100" value="50">
+    </div>
+    <div class="slider-wrapper">
+      <label>Độ sáng</label>
+      <input type="range" id="brightness" min="0" max="15" value="2">
+    </div>
+    <div class="effect-wrapper">
+      <label>Hiệu ứng</label>
+      <div class="effect-buttons">
+        <div class="effect-button" data-effect="scroll-left">Cuộn trái</div>
+        <div class="effect-button" data-effect="scroll-right">Cuộn phải</div>
+      </div>
+    </div>
+    <div class="checkbox-wrapper">
+      <input type="checkbox" id="blink">
+      <label>Nhấp nháy</label>
+      <div class="blink-interval-wrapper" id="blinkIntervalWrapper">
+        <label style="font-size: 1.2rem;">Thời gian trễ (ms):</label>
+        <input type="number" id="blinkInterval" min="100" value="500">
+      </div>
+    </div>
+    <button onclick="sendMessage()">Gửi đến Matrix</button>
   </div>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-
   <script>
-    // Firebase Configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyCBU4ysa6D-2J6-T0xRkHBArr0ydek4WDg",
-      authDomain: "userinfo-3dcb7.firebaseapp.com",
-      projectId: "userinfo-3dcb7",
-      storageBucket: "userinfo-3dcb7.firebasestorage.app",
-      messagingSenderId: "232578188505",
-      appId: "1:232578188505:web:81fb0a4c7ac7c7d4c5eac8"
-    };
-
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-
-    // Check authentication state with Firebase
-    auth.onAuthStateChanged((user) => {
-      const dashboard = document.getElementById('dashboard');
-      if (!user) {
-        // User is not logged in, redirect to login page
-        localStorage.removeItem('isLoggedIn');
-        window.location.href = 'login.html';
-      } else {
-        // User is logged in, show the dashboard
-        localStorage.setItem('isLoggedIn', 'true');
-        dashboard.style.display = 'block';
-      }
-    });
-
     const effectButtons = document.querySelectorAll('.effect-button');
     const messageInput = document.getElementById('message');
     const speedSlider = document.getElementById('speed');
@@ -754,6 +560,7 @@
     const blinkIntervalWrapper = document.getElementById('blinkIntervalWrapper');
     let selectedEffect = 'scroll-left';
 
+    // Xử lý chọn hiệu ứng
     effectButtons.forEach(button => {
       button.addEventListener('click', () => {
         effectButtons.forEach(btn => btn.classList.remove('active'));
@@ -764,6 +571,7 @@
 
     document.querySelector('.effect-button[data-effect="scroll-left"]').classList.add('active');
 
+    // Xử lý checkbox nhấp nháy
     blinkCheckbox.addEventListener('change', () => {
       const isBlinkEnabled = blinkCheckbox.checked;
       blinkIntervalWrapper.classList.toggle('show', isBlinkEnabled);
@@ -781,7 +589,7 @@
         return;
       }
 
-      const url = 'https://5ae6-2402-800-629c-7d19-a8bf-dfe-253a-618b.ngrok-free.app/update';
+      const url = 'https://5502-2402-800-629c-7d19-a8bf-dfe-253a-618b.ngrok-free.app/update';
       const data = `text=${encodeURIComponent(message)}&speed=${speed}&effect=${selectedEffect}&brightness=${brightness}&blink=${blink}&blinkInterval=${blinkInterval}`;
 
       try {
@@ -810,6 +618,7 @@
       }
     }
 
+    // Thêm tính năng vô hiệu hóa Ctrl+U
     document.addEventListener('keydown', function(event) {
       if (event.ctrlKey && event.keyCode === 85) {
         event.preventDefault();
