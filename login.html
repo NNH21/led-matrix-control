@@ -35,7 +35,6 @@
       color: var(--accent);
     }
 
-    /* Background Particle Effect */
     #particles-js {
       position: absolute;
       width: 100%;
@@ -51,7 +50,7 @@
       border-radius: 25px;
       box-shadow: var(--shadow);
       width: 100%;
-      max-width: 600px; /* Phóng to container */
+      max-width: 600px;
       border: 2px solid rgba(0, 240, 255, 0.3);
       animation: fadeInUp 1s ease-out;
       position: relative;
@@ -72,7 +71,7 @@
 
     h2 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 3.5rem; /* Phóng to tiêu đề */
+      font-size: 3.5rem;
       text-align: center;
       margin-bottom: 2.5rem;
       background: var(--gradient);
@@ -85,7 +84,7 @@
     .form-wrapper {
       position: relative;
       width: 100%;
-      height: 400px; /* Tăng chiều cao form để chứa thêm trường xác nhận mật khẩu */
+      height: 400px;
       overflow: hidden;
     }
 
@@ -117,19 +116,19 @@
     }
 
     .input-group {
-      margin-bottom: 2rem; /* Tăng khoảng cách giữa các trường */
+      margin-bottom: 2rem;
       position: relative;
     }
 
     input[type="text"],
     input[type="password"] {
       width: 100%;
-      padding: 1.2rem 1.5rem; /* Tăng padding */
+      padding: 1.2rem 1.5rem;
       border: 2px solid rgba(0, 240, 255, 0.3);
       border-radius: 12px;
       background: rgba(255, 255, 255, 0.05);
       color: var(--accent);
-      font-size: 1.2rem; /* Tăng kích thước font */
+      font-size: 1.2rem;
       transition: all 0.4s ease;
       font-family: 'Roboto', sans-serif;
     }
@@ -165,11 +164,11 @@
 
     button {
       width: 100%;
-      padding: 1.5rem; /* Tăng padding */
+      padding: 1.5rem;
       background: var(--gradient);
       color: #0d0d1a;
       font-weight: 700;
-      font-size: 1.3rem; /* Tăng kích thước font */
+      font-size: 1.3rem;
       border: none;
       border-radius: 12px;
       cursor: pointer;
@@ -206,7 +205,7 @@
       text-align: center;
       margin-top: 1.5rem;
       color: var(--primary);
-      font-size: 1.1rem; /* Tăng kích thước font */
+      font-size: 1.1rem;
       text-shadow: 0 0 5px var(--glow);
       cursor: pointer;
       transition: all 0.3s ease;
@@ -238,7 +237,6 @@
       100% { left: 100%; }
     }
 
-    /* Responsive cho laptop lớn (max-width: 1200px) */
     @media (max-width: 1200px) {
       .login-container {
         max-width: 550px;
@@ -266,7 +264,6 @@
       }
     }
 
-    /* Responsive cho tablet (max-width: 1024px) */
     @media (max-width: 1024px) {
       .login-container {
         max-width: 500px;
@@ -294,7 +291,6 @@
       }
     }
 
-    /* Responsive cho tablet nhỏ (max-width: 768px) */
     @media (max-width: 768px) {
       .login-container {
         max-width: 450px;
@@ -326,7 +322,6 @@
       }
     }
 
-    /* Responsive cho mobile (max-width: 480px) */
     @media (max-width: 480px) {
       .login-container {
         max-width: 90%;
@@ -358,7 +353,6 @@
       }
     }
 
-    /* Responsive cho mobile rất nhỏ (max-width: 360px) */
     @media (max-width: 360px) {
       .login-container {
         padding: 1.5rem;
@@ -391,13 +385,11 @@
   </style>
 </head>
 <body oncontextmenu="return false">
-  <!-- Particle Background -->
   <div id="particles-js"></div>
 
   <div class="login-container">
     <h2>LED Matrix Control</h2>
     <div class="form-wrapper">
-      <!-- Form Đăng nhập -->
       <form id="login-form" class="form active">
         <div class="input-group">
           <input type="text" id="login-username" placeholder="Tên đăng nhập" required>
@@ -410,7 +402,6 @@
         <div class="toggle-link" onclick="showRegisterForm()">Chưa có tài khoản? Đăng ký ngay!</div>
       </form>
 
-      <!-- Form Đăng ký -->
       <form id="register-form" class="form hidden">
         <div class="input-group">
           <input type="text" id="register-username" placeholder="Tên đăng nhập" required>
@@ -429,10 +420,8 @@
     </div>
   </div>
 
-  <!-- Thêm thư viện particles.js -->
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <script>
-    // Khởi tạo particles.js
     particlesJS("particles-js", {
       particles: {
         number: { value: 80, density: { enable: true, value_area: 800 } },
@@ -451,7 +440,6 @@
       retina_detect: true
     });
 
-    // Chuyển đổi giữa form đăng nhập và đăng ký
     const loginForm = document.getElementById('login-form');
     const registerForm = document.getElementById('register-form');
 
@@ -469,7 +457,6 @@
       loginForm.classList.add('active');
     }
 
-    // Hiển thị/ẩn mật khẩu
     function togglePassword(inputId) {
       const input = document.getElementById(inputId);
       const icon = input.nextElementSibling;
@@ -484,7 +471,6 @@
       }
     }
 
-    // Xử lý đăng ký
     async function register() {
       const username = document.getElementById('register-username').value;
       const password = document.getElementById('register-password').value;
@@ -500,8 +486,7 @@
         return;
       }
 
-      // Gửi dữ liệu đến Google Apps Script
-      const scriptURL = 'https://script.google.com/macros/s/AKfycbwIwnJgJrUeU5Mbgr8OGADCZw9v1av4d5xy53k38ITDltTF-WiDbhrZYx9duAUSXClDsQ/exec'; // Thay bằng URL của Web App
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbwIwnJgJrUeU5Mbgr8OGADCZw9v1av4d5xy53k38ITDltTF-WiDbhrZYx9duAUSXClDsQ/exec';
       const data = { username, password };
 
       try {
@@ -523,7 +508,6 @@
       }
     }
 
-    // Xử lý đăng nhập
     async function login() {
       const username = document.getElementById('login-username').value;
       const password = document.getElementById('login-password').value;
@@ -533,15 +517,15 @@
         return;
       }
 
-      // Gửi yêu cầu kiểm tra đăng nhập đến Google Apps Script
-      const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_URL'; // Thay bằng URL của Web App
+      const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_URL'; // Thay bằng URL thực tế của bạn
       const url = `${scriptURL}?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
 
       try {
         const response = await fetch(url);
         const result = await response.json();
         if (result.status === 'success') {
-          window.location.href = 'dashboard.html'; // Chuyển hướng đến dashboard.html
+          localStorage.setItem('isLoggedIn', 'true');
+          window.location.href = 'index.html';
         } else {
           alert(result.message);
         }
@@ -550,7 +534,6 @@
       }
     }
 
-    // Vô hiệu hóa Ctrl+U
     document.addEventListener('keydown', function(event) {
       if (event.ctrlKey && event.keyCode === 85) {
         event.preventDefault();

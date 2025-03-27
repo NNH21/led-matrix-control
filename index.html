@@ -358,7 +358,6 @@
       100% { left: 100%; }
     }
 
-    /* Media query cho laptop lớn (max-width: 1200px) */
     @media (max-width: 1200px) {
       .container {
         max-width: 800px;
@@ -395,7 +394,6 @@
       }
     }
 
-    /* Media query cho tablet (max-width: 1024px) */
     @media (max-width: 1024px) {
       .container {
         max-width: 700px;
@@ -456,7 +454,6 @@
       }
     }
 
-    /* Media query cho tablet nhỏ (max-width: 768px) */
     @media (max-width: 768px) {
       .container {
         max-width: 600px;
@@ -521,7 +518,6 @@
       }
     }
 
-    /* Media query cho mobile (max-width: 480px) */
     @media (max-width: 480px) {
       .container {
         max-width: 100%;
@@ -617,7 +613,6 @@
       }
     }
 
-    /* Media query cho mobile rất nhỏ (max-width: 360px) */
     @media (max-width: 360px) {
       .container {
         padding: 1rem;
@@ -716,6 +711,11 @@
   </div>
 
   <script>
+    // Kiểm tra trạng thái đăng nhập khi tải trang
+    if (!localStorage.getItem('isLoggedIn')) {
+      window.location.href = 'login.html';
+    }
+
     const effectButtons = document.querySelectorAll('.effect-button');
     const messageInput = document.getElementById('message');
     const speedSlider = document.getElementById('speed');
@@ -725,7 +725,6 @@
     const blinkIntervalWrapper = document.getElementById('blinkIntervalWrapper');
     let selectedEffect = 'scroll-left';
 
-    // Xử lý chọn hiệu ứng
     effectButtons.forEach(button => {
       button.addEventListener('click', () => {
         effectButtons.forEach(btn => btn.classList.remove('active'));
@@ -736,7 +735,6 @@
 
     document.querySelector('.effect-button[data-effect="scroll-left"]').classList.add('active');
 
-    // Xử lý checkbox nhấp nháy
     blinkCheckbox.addEventListener('change', () => {
       const isBlinkEnabled = blinkCheckbox.checked;
       blinkIntervalWrapper.classList.toggle('show', isBlinkEnabled);
@@ -754,7 +752,7 @@
         return;
       }
 
-      const url = 'https://3717-2402-800-629c-7d19-d132-f463-1119-5892.ngrok-free.app/update';
+      const url = 'https://f7fd-2402-800-629c-7d19-d132-f463-1119-5892.ngrok-free.app/update';
       const data = `text=${encodeURIComponent(message)}&speed=${speed}&effect=${selectedEffect}&brightness=${brightness}&blink=${blink}&blinkInterval=${blinkInterval}`;
 
       try {
@@ -783,7 +781,6 @@
       }
     }
 
-    // Thêm tính năng vô hiệu hóa Ctrl+U
     document.addEventListener('keydown', function(event) {
       if (event.ctrlKey && event.keyCode === 85) {
         event.preventDefault();
