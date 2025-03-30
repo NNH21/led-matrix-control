@@ -682,7 +682,7 @@
 
     // Hàm gửi dữ liệu chung
     async function sendData(data) {
-      const url = 'https://8e7a-2402-800-629c-7d19-d132-f463-1119-5892.ngrok-free.app/update';
+      const url = 'https://ad0f-2402-800-629c-7d19-d132-f463-1119-5892.ngrok-free.app/update';
       try {
         const response = await fetch(url, {
           method: 'POST',
@@ -800,33 +800,47 @@
     // Chế Độ Nhạc (Music Visualizer - sửa lỗi CORS, hiển thị sóng âm đứng yên)
     let audioContext, analyser, source;
     function startMusicVisualizer() {
-      stopMusicVisualizer();
+      stopMusicVisualizer(); // Stop any existing visualizer
+    
       if (!audioContext) {
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
         analyser = audioContext.createAnalyser();
-        analyser.fftSize = 256;
-
-        // Sửa lỗi CORS bằng cách đảm bảo chạy trên localhost hoặc HTTPS
+        analyser.fftSize = 64; // Lower fftSize for fewer frequency bins (suitable for LED matrix)
+    
+        // Request microphone access
         navigator.mediaDevices.getUserMedia({ audio: true })
           .then(stream => {
             source = audioContext.createMediaStreamSource(stream);
             source.connect(analyser);
+    
             const bufferLength = analyser.frequencyBinCount;
             const dataArray = new Uint8Array(bufferLength);
-
+    
             musicVisualizerInterval = setInterval(() => {
               analyser.getByteFrequencyData(dataArray);
+    
+              // Calculate average intensity for brightness
               const avg = dataArray.reduce((a, b) => a + b) / bufferLength;
-              const intensity = Math.floor(avg / 255 * 15); // Chuyển đổi thành giá trị từ 0-15
-              const speed = speedSlider.value;
-              const brightness = intensity;
-
-              // Hiển thị sóng âm đứng yên (static), không cuộn
-              const data = `text=${encodeURIComponent('Music')}&speed=${speed}&effect=static&brightness=${brightness}&blink=on&blinkInterval=100`;
+              const brightness = Math.floor(avg / 255 * 15); // Scale to 0-15 for LED matrix
+    
+              // Create a simple bar visualization
+              const bars = Array.from(dataArray)
+                .map(value => Math.floor(value / 255 * 15)) // Scale each frequency bin to 0-15
+                .join(' ');
+    
+              const speed = 0; // Static display
+              const effect = 'static'; // No scrolling
+              const blink = 'off'; // No blinking
+              const blinkInterval = 500;
+    
+              const data = `text=${encodeURIComponent(bars)}&speed=${speed}&effect=${effect}&brightness=${brightness}&blink=${blink}&blinkInterval=${blinkInterval}`;
               sendData(data);
-            }, 100);
+            }, 100); // Update every 100ms
           })
-          .catch(err => alert('Lỗi truy cập micro: ' + err.message));
+          .catch(err => {
+            alert('Lỗi truy cập micro: ' + err.message);
+            console.error('Microphone access error:', err);
+          });
       }
     }
 
