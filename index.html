@@ -682,7 +682,7 @@
 
     // Hàm gửi dữ liệu chung
     async function sendData(data) {
-      const url = 'https://d06b-2402-800-629c-7d19-d132-f463-1119-5892.ngrok-free.app/update';
+      const url = 'https://c0d5-2402-800-629c-7d19-d132-f463-1119-5892.ngrok-free.app/update';
       try {
         const response = await fetch(url, {
           method: 'POST',
@@ -763,25 +763,26 @@
     }
 
     // Chế Độ Đồng Hồ (đứng yên và múi giờ Việt Nam UTC+7)
-    function startClock() {
-      stopClock(); // Dừng trước khi bắt đầu lại
-      clockInterval = setInterval(() => {
-        const now = new Date();
-        // Điều chỉnh múi giờ Việt Nam (UTC+7)
-        const vietnamOffset = 7 * 60; // UTC+7 tính bằng phút
-        const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-        const vietnamTime = new Date(utc + (vietnamOffset * 60000));
-        const time = vietnamTime.toLocaleTimeString('en-US', { hour12: false });
-        const speed = speedSlider.value;
-        const brightness = brightnessSlider.value;
-        const blink = blinkCheckbox.checked ? 'on' : 'off';
-        const blinkInterval = blinkCheckbox.checked ? blinkIntervalInput.value : 500;
-
-        // Đặt hiệu ứng đứng yên (static) cho Clock
-        const data = `text=${encodeURIComponent(time)}&speed=${speed}&effect=static&brightness=${brightness}&blink=${blink}&blinkInterval=${blinkInterval}`;
-        sendData(data);
-      }, 1000);
-    }
+      function startClock() {
+        stopClock(); // Stop any existing clock interval
+        clockInterval = setInterval(() => {
+          const now = new Date();
+          // Adjust for Vietnam timezone (UTC+7)
+          const vietnamOffset = 7 * 60; // UTC+7 in minutes
+          const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+          const vietnamTime = new Date(utc + (vietnamOffset * 60000));
+          const time = vietnamTime.toLocaleTimeString('en-US', { hour12: false });
+    
+          const speed = speedSlider.value;
+          const brightness = brightnessSlider.value;
+          const blink = blinkCheckbox.checked ? 'on' : 'off';
+          const blinkInterval = blinkCheckbox.checked ? blinkIntervalInput.value : 500;
+    
+          // Set the effect to "static" for stationary time display
+          const data = `text=${encodeURIComponent(time)}&speed=${speed}&effect=static&brightness=${brightness}&blink=${blink}&blinkInterval=${blinkInterval}`;
+          sendData(data);
+        }, 1000);
+      }
 
     function stopClock() {
       if (clockInterval) {
