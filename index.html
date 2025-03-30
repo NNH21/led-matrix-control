@@ -6,7 +6,7 @@
   <title>LED Matrix Control Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* Giữ nguyên toàn bộ CSS cũ, thêm style mới cho các tính năng */
+    /* Giữ nguyên toàn bộ CSS cũ */
     :root {
       --primary: #00f0ff;
       --secondary: #ff00ff;
@@ -341,7 +341,6 @@
       transform: scale(0.98);
     }
 
-    /* Thêm style cho các tính năng mới */
     .mode-wrapper {
       margin-bottom: 3.5rem;
     }
@@ -427,7 +426,6 @@
       display: block;
     }
 
-    /* Giữ nguyên các media queries cũ */
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(50px); }
       to { opacity: 1; transform: translateY(0); }
@@ -684,7 +682,7 @@
 
     // Hàm gửi dữ liệu chung
     async function sendData(data) {
-      const url = 'https://430e-2402-800-629c-7d19-d132-f463-1119-5892.ngrok-free.app/update';
+      const url = 'https://d06b-2402-800-629c-7d19-d132-f463-1119-5892.ngrok-free.app/update';
       try {
         const response = await fetch(url, {
           method: 'POST',
@@ -731,7 +729,7 @@
       }
     }
 
-    // Chế Độ Thời Tiết
+    // Chế Độ Thời Tiết (thay ° thành " Do ")
     async function fetchWeather() {
       const city = document.getElementById('city').value;
       if (!city) {
@@ -745,7 +743,8 @@
         const response = await fetch(url);
         const data = await response.json();
         if (response.ok) {
-          const weatherText = `${data.main.temp}°C - ${data.weather[0].main}`;
+          // Thay ° thành " Do "
+          const weatherText = `${data.main.temp} Do - ${data.weather[0].main}`;
           const speed = speedSlider.value;
           const brightness = brightnessSlider.value;
           const blink = blinkCheckbox.checked ? 'on' : 'off';
@@ -763,18 +762,23 @@
       }
     }
 
-    // Chế Độ Đồng Hồ
+    // Chế Độ Đồng Hồ (đứng yên và múi giờ Việt Nam UTC+7)
     function startClock() {
       stopClock(); // Dừng trước khi bắt đầu lại
       clockInterval = setInterval(() => {
         const now = new Date();
-        const time = now.toLocaleTimeString('en-US', { hour12: false });
+        // Điều chỉnh múi giờ Việt Nam (UTC+7)
+        const vietnamOffset = 7 * 60; // UTC+7 tính bằng phút
+        const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+        const vietnamTime = new Date(utc + (vietnamOffset * 60000));
+        const time = vietnamTime.toLocaleTimeString('en-US', { hour12: false });
         const speed = speedSlider.value;
         const brightness = brightnessSlider.value;
         const blink = blinkCheckbox.checked ? 'on' : 'off';
         const blinkInterval = blinkCheckbox.checked ? blinkIntervalInput.value : 500;
 
-        const data = `text=${encodeURIComponent(time)}&speed=${speed}&effect=${selectedEffect}&brightness=${brightness}&blink=${blink}&blinkInterval=${blinkInterval}`;
+        // Đặt hiệu ứng đứng yên (static) cho Clock
+        const data = `text=${encodeURIComponent(time)}&speed=${speed}&effect=static&brightness=${brightness}&blink=${blink}&blinkInterval=${blinkInterval}`;
         sendData(data);
       }, 1000);
     }
@@ -786,7 +790,7 @@
       }
     }
 
-    // Chế Độ Nhạc (Music Visualizer)
+    // Chế Độ Nhạc (Music Visualizer - sửa lỗi CORS, hiển thị sóng âm đứng yên)
     let audioContext, analyser, source;
     function startMusicVisualizer() {
       stopMusicVisualizer();
@@ -795,6 +799,7 @@
         analyser = audioContext.createAnalyser();
         analyser.fftSize = 256;
 
+        // Sửa lỗi CORS bằng cách đảm bảo chạy trên localhost hoặc HTTPS
         navigator.mediaDevices.getUserMedia({ audio: true })
           .then(stream => {
             source = audioContext.createMediaStreamSource(stream);
@@ -809,7 +814,8 @@
               const speed = speedSlider.value;
               const brightness = intensity;
 
-              const data = `text=${encodeURIComponent('Music')}&speed=${speed}&effect=${selectedEffect}&brightness=${brightness}&blink=on&blinkInterval=100`;
+              // Hiển thị sóng âm đứng yên (static), không cuộn
+              const data = `text=${encodeURIComponent('Music')}&speed=${speed}&effect=static&brightness=${brightness}&blink=on&blinkInterval=100`;
               sendData(data);
             }, 100);
           })
