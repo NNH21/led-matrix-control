@@ -682,7 +682,7 @@
 
     // Hàm gửi dữ liệu chung
     async function sendData(data) {
-      const url = 'https://ad0f-2402-800-629c-7d19-d132-f463-1119-5892.ngrok-free.app/update';
+      const url = 'https://2b10-2402-800-629c-7d19-d132-f463-1119-5892.ngrok-free.app/update';
       try {
         const response = await fetch(url, {
           method: 'POST',
@@ -805,7 +805,7 @@
       if (!audioContext) {
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
         analyser = audioContext.createAnalyser();
-        analyser.fftSize = 64; // Lower fftSize for fewer frequency bins (suitable for LED matrix)
+        analyser.fftSize = 2048; // Larger fftSize for better time-domain resolution
     
         // Request microphone access
         navigator.mediaDevices.getUserMedia({ audio: true })
@@ -813,29 +813,50 @@
             source = audioContext.createMediaStreamSource(stream);
             source.connect(analyser);
     
-            const bufferLength = analyser.frequencyBinCount;
+            const bufferLength = analyser.fftSize;
             const dataArray = new Uint8Array(bufferLength);
     
             musicVisualizerInterval = setInterval(() => {
-              analyser.getByteFrequencyData(dataArray);
+              // Use time-domain data instead of frequency data
+              analyser.getByteTimeDomainData(dataArray);
+    
+              // Map the time-domain data to a waveform string
+              const ledMatrixWidth = 32; // Adjust based on your LED matrix width (e.g., 32 columns)
+              const step = Math.floor(bufferLength / ledMatrixWidth); // Downsample to fit LED matrix width
+              let waveform = '';
+    
+              for (let i = 0; i < ledMatrixWidth; i++) {
+                const sampleIndex = i * step;
+                const amplitude = dataArray[sampleIndex]; // Values range from 0 to 255
+    
+                // Normalize amplitude to a range (e.g., -1 to 1)
+                const normalized = (amplitude - 128) / 128; // Center around 0 (-1 to 1)
+    
+                // Map the normalized amplitude to a character representation
+                // Use '|' for high amplitude, spaces for low amplitude
+                const maxHeight = 8; // Max height of waveform on LED matrix (adjust based on your matrix height)
+                const scaledAmplitude = Math.round(Math.abs(normalized) * maxHeight);
+    
+                // Create symmetrical waveform by using '|' for both positive and negative amplitudes
+                if (scaledAmplitude > 0) {
+                  waveform += '|'; // Use '|' to represent amplitude
+                } else {
+                  waveform += ' '; // Use space for low amplitude
+                }
+              }
     
               // Calculate average intensity for brightness
-              const avg = dataArray.reduce((a, b) => a + b) / bufferLength;
-              const brightness = Math.floor(avg / 255 * 15); // Scale to 0-15 for LED matrix
-    
-              // Create a simple bar visualization
-              const bars = Array.from(dataArray)
-                .map(value => Math.floor(value / 255 * 15)) // Scale each frequency bin to 0-15
-                .join(' ');
+              const avg = dataArray.reduce((a, b) => a + Math.abs(b - 128), 0) / bufferLength;
+              const brightness = Math.floor(avg / 128 * 15); // Scale to 0-15 for LED matrix
     
               const speed = 0; // Static display
               const effect = 'static'; // No scrolling
               const blink = 'off'; // No blinking
               const blinkInterval = 500;
     
-              const data = `text=${encodeURIComponent(bars)}&speed=${speed}&effect=${effect}&brightness=${brightness}&blink=${blink}&blinkInterval=${blinkInterval}`;
+              const data = `text=${encodeURIComponent(waveform)}&speed=${speed}&effect=${effect}&brightness=${brightness}&blink=${blink}&blinkInterval=${blinkInterval}`;
               sendData(data);
-            }, 100); // Update every 100ms
+            }, 50); // Update every 50ms for smoother animation
           })
           .catch(err => {
             alert('Lỗi truy cập micro: ' + err.message);
@@ -843,7 +864,7 @@
           });
       }
     }
-
+    
     function stopMusicVisualizer() {
       if (musicVisualizerInterval) {
         clearInterval(musicVisualizerInterval);
