@@ -341,6 +341,16 @@
       transform: scale(0.98);
     }
 
+        @keyframes scrollLeft {
+      from { transform: translateX(100%); }
+      to { transform: translateX(-100%); }
+    }
+    
+    @keyframes scrollRight {
+      from { transform: translateX(-100%); }
+      to { transform: translateX(100%); }
+    }
+
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(50px); }
       to { opacity: 1; transform: translateY(0); }
@@ -690,7 +700,9 @@
 <body oncontextmenu="return false">
   <div id="particles-js"></div>
 
+    <div id="preview" style="margin-top: 2rem; padding: 1rem; background: #000; color: #fff; text-align: center; border-radius: 8px;">
 
+  </div>
   <div class="container">
     <h1>LED Matrix Control</h1>
     <div class="input-wrapper">
@@ -784,6 +796,18 @@
       const isBlinkEnabled = blinkCheckbox.checked;
       blinkIntervalWrapper.classList.toggle('show', isBlinkEnabled);
     });
+
+        function updatePreview() {
+      const preview = document.getElementById('preview');
+      preview.textContent = messageInput.value || 'Xem trước tin nhắn';
+      preview.style.animation = selectedEffect === 'scroll-left'
+        ? 'scrollLeft 5s linear infinite'
+        : 'scrollRight 5s linear infinite';
+    }
+    
+    messageInput.addEventListener('input', updatePreview);
+    speedSlider.addEventListener('input', updatePreview);
+    brightnessSlider.addEventListener('input', updatePreview);
   
     async function sendMessage() {
       const message = messageInput.value;
