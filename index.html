@@ -682,7 +682,7 @@
 
     // Hàm gửi dữ liệu chung
     async function sendData(data) {
-      const url = 'https://c0d5-2402-800-629c-7d19-d132-f463-1119-5892.ngrok-free.app/update';
+      const url = 'https://8e7a-2402-800-629c-7d19-d132-f463-1119-5892.ngrok-free.app/update';
       try {
         const response = await fetch(url, {
           method: 'POST',
@@ -761,28 +761,34 @@
         alert(`Lỗi khi lấy dữ liệu thời tiết: ${error.message}`);
       }
     }
-
-    // Chế Độ Đồng Hồ (đứng yên và múi giờ Việt Nam UTC+7)
-      function startClock() {
-        stopClock(); // Stop any existing clock interval
-        clockInterval = setInterval(() => {
-          const now = new Date();
-          // Adjust for Vietnam timezone (UTC+7)
-          const vietnamOffset = 7 * 60; // UTC+7 in minutes
-          const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-          const vietnamTime = new Date(utc + (vietnamOffset * 60000));
-          const time = vietnamTime.toLocaleTimeString('en-US', { hour12: false });
+    function startClock() {
+      stopClock(); // Stop any existing clock interval
+      clockInterval = setInterval(() => {
+        const now = new Date();
+        // Adjust for Vietnam timezone (UTC+7)
+        const vietnamOffset = 7 * 60; // UTC+7 in minutes
+        const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+        const vietnamTime = new Date(utc + (vietnamOffset * 60000));
+        // Định dạng thời gian HH:MM:SS (24h format)
+        const time = vietnamTime.toLocaleTimeString('en-US', { hour12: false });
     
-          const speed = speedSlider.value;
-          const brightness = brightnessSlider.value;
-          const blink = blinkCheckbox.checked ? 'on' : 'off';
-          const blinkInterval = blinkCheckbox.checked ? blinkIntervalInput.value : 500;
+        const speed = speedSlider.value;
+        const brightness = brightnessSlider.value;
+        const blink = blinkCheckbox.checked ? 'on' : 'off';
+        const blinkInterval = blinkCheckbox.checked ? blinkIntervalInput.value : 500;
     
-          // Set the effect to "static" for stationary time display
-          const data = `text=${encodeURIComponent(time)}&speed=${speed}&effect=static&brightness=${brightness}&blink=${blink}&blinkInterval=${blinkInterval}`;
-          sendData(data);
-        }, 1000);
+        // Đặt effect=static để đứng yên, speed=0 để đảm bảo không cuộn (phòng trường hợp server không hỗ trợ static)
+        const data = `text=${encodeURIComponent(time)}&speed=0&effect=static&brightness=${brightness}&blink=${blink}&blinkInterval=${blinkInterval}`;
+        sendData(data);
+      }, 1000); // Cập nhật mỗi giây
+    }
+    
+    function stopClock() {
+      if (clockInterval) {
+        clearInterval(clockInterval);
+        clockInterval = null;
       }
+    }
 
     function stopClock() {
       if (clockInterval) {
